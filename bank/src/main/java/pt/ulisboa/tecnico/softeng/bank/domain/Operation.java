@@ -49,7 +49,7 @@ public class Operation extends Operation_Base {
 		if (type == null || account == null || value <= 0) {
 			throw new BankException();
 		}
-		if (type != Type.WITHDRAW && type != Type.DEPOSIT) {
+		if (type != Type.WITHDRAW && type != Type.DEPOSIT && type != Type.TRANSFER) {
 			throw new BankException();
 		}
 	}
@@ -69,8 +69,15 @@ public class Operation extends Operation_Base {
 		case DEPOSIT:
 			return getSourceAccount().withdraw(getValue()).getReference();
 		case WITHDRAW:
-			return getTargetAccount().deposit(getValue()).getReference();
-		default:
+			return getSourceAccount().deposit(getValue()).getReference();
+		case TRANSFER:
+			if (getTransactionSource().equals("REVERT"))
+				throw new BankException();
+			setTransactionSource("REVERT");
+			String ref = getTargetAccount().transferFrom(getValue()).getReference();
+			getSourceAccount().transferTo(getValue());
+			return ref;
+			default:
 			throw new BankException();
 
 		}

@@ -13,6 +13,7 @@ class BankInterfaceGetOperationDataMethodSpockTest extends SpockRollbackTestAbst
 	def bank
 	def account
 	def reference
+	def data
 
 	@Override
 	def populate4Test() {
@@ -24,12 +25,13 @@ class BankInterfaceGetOperationDataMethodSpockTest extends SpockRollbackTestAbst
 
 	def 'success'() {
 		when:
-		def data = BankInterface.getOperationData(reference)
+		println(BankInterface.getOperationData(reference))
+		data = BankInterface.getOperationData(reference)
 
 		then:
 		with(data) {
 			getReference() == reference
-			getIban() == account.getIBAN()
+			getSourceIban() == account.getIBAN()
 			getType() == Type.DEPOSIT.name()
 			getValue() == 100.0
 			getTime() != null

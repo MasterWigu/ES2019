@@ -21,7 +21,9 @@ public class BankOperationData {
 		this.reference = operation.getReference();
 		this.type = operation.getType().name();
 		this.sourceIban = operation.getSourceAccount().getIBAN();
-		this.targetIban = operation.getTargetAccount().getIBAN();
+		if(operation.getTargetAccount() != null)
+			this.targetIban = operation.getTargetAccount().getIBAN();
+		else this.targetIban =null;
 		this.value = operation.getValue();
 		this.time = operation.getTime();
 		this.transactionSource = operation.getTransactionSource();
