@@ -7,7 +7,8 @@ import pt.ulisboa.tecnico.softeng.bank.domain.Operation;
 public class BankOperationData {
 	private String reference;
 	private String type;
-	private String iban;
+	private String sourceIban;
+	private String targetIban;
 	private Double value;
 	private DateTime time;
 	private String transactionSource;
@@ -19,15 +20,17 @@ public class BankOperationData {
 	public BankOperationData(Operation operation) {
 		this.reference = operation.getReference();
 		this.type = operation.getType().name();
-		this.iban = operation.getAccount().getIBAN();
+		this.sourceIban = operation.getSourceAccount().getIBAN();
+		this.targetIban = operation.getTargetAccount().getIBAN();
 		this.value = operation.getValue();
 		this.time = operation.getTime();
 		this.transactionSource = operation.getTransactionSource();
 		this.transactionReference = operation.getTransactionReference();
 	}
 
-	public BankOperationData(String iban, double value, String transactionSource, String transactionReference) {
-		this.iban = iban;
+	public BankOperationData(String sourceIban, String targetIban, double value, String transactionSource, String transactionReference) {
+		this.sourceIban = sourceIban;
+		this.targetIban = targetIban;
 		this.value = value;
 		this.transactionSource = transactionSource;
 		this.transactionReference = transactionReference;
@@ -49,12 +52,20 @@ public class BankOperationData {
 		this.type = type;
 	}
 
-	public String getIban() {
-		return this.iban;
+	public String getSourceIban() {
+		return this.sourceIban;
 	}
 
-	public void setIban(String iban) {
-		this.iban = iban;
+	public void setSourceIban(String iban) {
+		this.sourceIban = iban;
+	}
+
+	public String getTargetIban() {
+		return this.targetIban;
+	}
+
+	public void setTargetIban(String iban) {
+		this.targetIban = iban;
 	}
 
 	public Double getValue() {

@@ -73,11 +73,25 @@ relation BankHasOperation {
 	}
 }
 
-relation AccountHasOperation {
-	Account playsRole account {
+relation SourceAccountHasOperation {
+	Account playsRole sourceAccount {
 		multiplicity 1..1;
 	}
-	Operation playsRole operation {
+	Operation playsRole sOperation {
 		multiplicity 0..*;
 	}
 }
+
+relation TargetAccountHasOperation {
+	Account playsRole targetAccount {
+		multiplicity 1..1;
+	}
+	Operation playsRole tOperation {
+		multiplicity 0..*;
+	}
+}
+
+
+
+
+

@@ -18,7 +18,7 @@ public class Account extends Account_Base {
 		setBank(null);
 		setClient(null);
 
-		for (Operation operation : getOperationSet()) {
+		for (Operation operation : getSOperationSet()) {
 			operation.delete();
 		}
 
@@ -54,6 +54,23 @@ public class Account extends Account_Base {
 		setBalance(getBalance() - amount);
 
 		return new Operation(Operation.Type.WITHDRAW, this, amount);
+	}
+
+	public void transferTo(double amount) {
+		if (amount <= 0) {
+			throw new BankException();
+		}
+		setBalance(getBalance() + amount);
+	}
+
+
+	public Operation transferFrom(double amount) {
+		if (amount <= 0 || amount > getBalance()) {
+			throw new BankException();
+		}
+		setBalance(getBalance() - amount);
+
+		return new Operation(Operation.Type.TRANSFER, this, amount);
 	}
 
 }
