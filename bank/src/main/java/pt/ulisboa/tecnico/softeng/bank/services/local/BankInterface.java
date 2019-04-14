@@ -118,6 +118,7 @@ public class BankInterface {
 		if (operation != null) {
 			return operation.getReference();
 		}
+
 		Account sourceAccount=null, targetAccount=null;
 		for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
 			sourceAccount = bank.getAccount(bankOperationData.getSourceIban());
@@ -131,6 +132,7 @@ public class BankInterface {
 				break;
 			}
 		}
+
 		if (sourceAccount != null && targetAccount != null) {
 			Operation newOperation = sourceAccount.transferFrom(bankOperationData.getValue());
 			newOperation.setTransactionSource(bankOperationData.getTransactionSource());

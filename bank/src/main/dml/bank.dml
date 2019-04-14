@@ -84,7 +84,7 @@ relation SourceAccountHasOperation {
 
 relation TargetAccountHasOperation {
 	Account playsRole targetAccount {
-		multiplicity 1..1;
+		multiplicity 0..1;
 	}
 	Operation playsRole tOperation {
 		multiplicity 0..*;
