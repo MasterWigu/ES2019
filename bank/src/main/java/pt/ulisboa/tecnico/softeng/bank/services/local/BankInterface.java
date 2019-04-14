@@ -114,19 +114,29 @@ public class BankInterface {
 	@Atomic(mode = TxMode.WRITE)
 	public static String processPayment(BankOperationData bankOperationData) {
 		Operation operation = getOperationBySourceAndReference(bankOperationData.getTransactionSource(),
-				bankOperationData.getTransactionReference());
+					bankOperationData.getTransactionReference());
 		if (operation != null) {
 			return operation.getReference();
 		}
-
+		Account sourceAccount=null, targetAccount=null;
 		for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
-			Account account = bank.getAccount(bankOperationData.getIban());
-			if (account != null) {
-				Operation newOperation = account.withdraw(bankOperationData.getValue());
-				newOperation.setTransactionSource(bankOperationData.getTransactionSource());
-				newOperation.setTransactionReference(bankOperationData.getTransactionReference());
-				return newOperation.getReference();
+			sourceAccount = bank.getAccount(bankOperationData.getSourceIban());
+			if (sourceAccount != null) {
+				break;
 			}
+		}
+		for (Bank bank : FenixFramework.getDomainRoot().getBankSet()) {
+			targetAccount = bank.getAccount(bankOperationData.getTargetIban());
+			if (targetAccount != null) {
+				break;
+			}
+		}
+		if (sourceAccount != null && targetAccount != null) {
+			Operation newOperation = sourceAccount.transferFrom(bankOperationData.getValue());
+			newOperation.setTransactionSource(bankOperationData.getTransactionSource());
+			newOperation.setTransactionReference(bankOperationData.getTransactionReference());
+			targetAccount.transferTo(bankOperationData.getValue());
+			return newOperation.getReference();
 		}
 		throw new BankException();
 	}

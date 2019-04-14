@@ -6,25 +6,41 @@ import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 
 public class Operation extends Operation_Base {
 	public static enum Type {
-		DEPOSIT, WITHDRAW
+		DEPOSIT, WITHDRAW, TRANSFER
 	};
 
-	public Operation(Type type, Account account, double value) {
-		checkArguments(type, account, value);
+	public Operation(Type type, Account sAccount, double value) {
+		checkArguments(type, sAccount, value);
 
-		setReference(account.getBank().getCode() + Integer.toString(account.getBank().getCounter()));
+		setReference(sAccount.getBank().getCode() + Integer.toString(sAccount.getBank().getCounter()));
 		setType(type);
 		setValue(value);
 		setTime(DateTime.now());
 
-		setAccount(account);
+		setSourceAccount(sAccount);
+		setTargetAccount(null);
 
-		setBank(account.getBank());
+		setBank(sAccount.getBank());
+	}
+
+	public Operation(Type type, Account sAccount, Account tAccount, double value) {
+		checkArguments(type, sAccount, value);
+
+		setReference(sAccount.getBank().getCode() + Integer.toString(sAccount.getBank().getCounter()));
+		setType(type);
+		setValue(value);
+		setTime(DateTime.now());
+
+		setSourceAccount(sAccount);
+		setTargetAccount(tAccount);
+
+		setBank(sAccount.getBank());
 	}
 
 	public void delete() {
 		setBank(null);
-		setAccount(null);
+		setSourceAccount(null);
+		setTargetAccount(null);
 
 		deleteDomainObject();
 	}
@@ -33,15 +49,27 @@ public class Operation extends Operation_Base {
 		if (type == null || account == null || value <= 0) {
 			throw new BankException();
 		}
+		if (type != Type.WITHDRAW && type != Type.DEPOSIT) {
+			throw new BankException();
+		}
+	}
+
+	private void checkArguments(Type type, Account sAccount, Account tAccount, double value) {
+		if (type == null || sAccount == null || tAccount == null || value <= 0) {
+			throw new BankException();
+		}
+		if (type != Type.TRANSFER) {
+			throw new BankException();
+		}
 	}
 
 	public String revert() {
 		setCancellation(getReference() + "_CANCEL");
 		switch (getType()) {
 		case DEPOSIT:
-			return getAccount().withdraw(getValue()).getReference();
+			return getSourceAccount().withdraw(getValue()).getReference();
 		case WITHDRAW:
-			return getAccount().deposit(getValue()).getReference();
+			return getTargetAccount().deposit(getValue()).getReference();
 		default:
 			throw new BankException();
 
