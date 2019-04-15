@@ -6,20 +6,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface.Type;
 
 public class Adventure extends Adventure_Base {
     public enum State {
         PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
     }
 
-    public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin) {
-        this(broker, begin, end, client, margin, false);
+    public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, double margin) {
+        this(broker, roomType, begin, end, client, margin, false);
     }
 
-    public Adventure(Broker broker, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
+    public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
         checkArguments(broker, begin, end, client, margin);
 
         setID(broker.getCode() + Integer.toString(broker.getCounter()));
+        setRoomType(roomType);
         setBegin(begin);
         setEnd(end);
         setMargin(margin);
