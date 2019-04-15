@@ -6,7 +6,7 @@ class ActivityProvider {
 	String nif;
 	String iban;
 	int counter;
-} 
+}
 
 relation DomainRootHasActivityProviders {
 	.pt.ist.fenixframework.DomainRoot playsRole root {
@@ -38,7 +38,7 @@ class ActivityOffer {
 	LocalDate begin;
 	LocalDate end;
 	int capacity;
-	double amount;
+	Long amount;
 }
 
 relation ActivityHasActivityOffers {
@@ -58,7 +58,7 @@ class Booking {
 	String providerIban;
 	String iban;
 	int age;
-	double amount;
+	Long amount;
 	LocalDate date;
 	String paymentReference;
 	String invoiceReference;
@@ -98,5 +98,3 @@ relation ProcessorManagesActivityBookings {
 		multiplicity 0..*;
 	}
 }
-
-

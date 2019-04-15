@@ -38,24 +38,24 @@ class ActivityOfferConstructorMethodSpockTest extends SpockRollbackTestAbstractC
 
 		where:
 		the_beg | the_end | amount
-		begin   | end     | 30
-		begin   | begin   | 30
+		begin   | end     | 30000L
+		begin   | begin   | 30000L
 	}
 
 	@Unroll('exception: #the_beg, #the_end')
 	def 'exception'() {
 		when:
-		new ActivityOffer(null, the_beg ,the_end ,30)
+		new ActivityOffer(null, the_beg ,the_end ,30000L)
 
 		then:
 		thrown(ActivityException)
 
 		where:
 		act      | the_beg | the_end               | amnt
-		null     | begin   | end                   | 30
-		activity | null    | end                   | 30
-		activity | begin   | null                  | 30
-		activity | begin   | begin.minusDays(1)    | 30
-		activity | begin   | end                   | 0
+		null     | begin   | end                   | 30000L
+		activity | null    | end                   | 30000L
+		activity | begin   | null                  | 30000L
+		activity | begin   | begin.minusDays(1)    | 30000L
+		activity | begin   | end                   | 0L
 	}
 }
