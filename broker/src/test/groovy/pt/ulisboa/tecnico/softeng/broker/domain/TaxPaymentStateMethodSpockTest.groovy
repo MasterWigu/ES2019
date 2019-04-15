@@ -17,7 +17,7 @@ class TaxPaymentStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         broker = new Broker('BR01', 'eXtremeADVENTURE', BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,
                 new ActivityInterface(), new HotelInterface(), new CarInterface(), new BankInterface(), taxInterface)
         client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
-        adventure = new Adventure(broker, BEGIN, END, client, MARGIN)
+        adventure = new Adventure(broker, ROOMTYPE, BEGIN, END, client, MARGIN)
 
         adventure.setState(Adventure.State.TAX_PAYMENT)
     }

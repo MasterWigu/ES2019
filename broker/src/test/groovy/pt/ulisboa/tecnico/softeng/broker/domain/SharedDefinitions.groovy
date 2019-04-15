@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.softeng.broker.domain
 
 import org.joda.time.LocalDate
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface.Type
 import spock.lang.Shared
 
 trait SharedDefinitions {
@@ -42,4 +43,6 @@ trait SharedDefinitions {
     @Shared def END = new LocalDate(2016, 12, 21)
     @Shared def ARRIVAL = new LocalDate(2016, 12, 19)
     @Shared def DEPARTURE = new LocalDate(2016, 12, 21)
+
+    @Shared def ROOMTYPE = Type.SINGLE
 }
