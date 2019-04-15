@@ -4,9 +4,11 @@ import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface.Type;
 
 public class AdventureData {
 	private String id;
+	private Type roomType;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate begin;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -30,6 +32,7 @@ public class AdventureData {
 
 	public AdventureData(Adventure adventure) {
 		this.id = adventure.getID();
+		this.roomType = adventure.getRoomType();
 		this.begin = adventure.getBegin();
 		this.end = adventure.getEnd();
 		this.age = adventure.getAge();
@@ -52,6 +55,14 @@ public class AdventureData {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public Type getRoomType() {
+		return this.roomType;
+	}
+
+	public void setRoomType(Type roomType) {
+		this.roomType = roomType;
 	}
 
 	public LocalDate getBegin() {
