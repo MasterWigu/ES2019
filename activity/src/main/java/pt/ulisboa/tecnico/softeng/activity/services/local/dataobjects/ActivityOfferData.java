@@ -19,7 +19,7 @@ public class ActivityOfferData {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate end;
 	private Integer capacity;
-	private Double amount;
+	private Long amount;
 	private List<RestActivityBookingData> reservations;
 
 	public ActivityOfferData() {
@@ -95,10 +95,11 @@ public class ActivityOfferData {
 	}
 
 	public Double getAmount() {
-		return this.amount;
+		Double d = Double.valueOf(this.amount);
+		return d / 1000;
 	}
 
-	public void setAmount(Double amount) {
+	public void setAmount(Long amount) {
 		this.amount = amount;
 	}
 

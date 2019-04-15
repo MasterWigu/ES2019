@@ -81,8 +81,9 @@ public class ActivityInterface {
 			throw new ActivityException();
 		}
 
+		Long result = (Long)(offer.getAmount().longValue());
 		new ActivityOffer(activity, offer.getBegin(), offer.getEnd(),
-				offer.getAmount() != null ? offer.getAmount() : -1);
+				result != null ? result : -1);
 	}
 
 	@Atomic(mode = TxMode.WRITE)
