@@ -117,9 +117,9 @@ public class RentACarInterface {
 
         final RentACar rentACar = getRentACar(code);
         if (vehicleData.getType() == Vehicle.Type.CAR) {
-            new Car(vehicleData.getPlate(), vehicleData.getKilometers(), vehicleData.getPrice(), rentACar);
+            new Car(vehicleData.getPlate(), vehicleData.getKilometers(), (Long)(vehicleData.getPrice().longValue()), rentACar);
         } else {
-            new Motorcycle(vehicleData.getPlate(), vehicleData.getKilometers(), vehicleData.getPrice(), rentACar);
+            new Motorcycle(vehicleData.getPlate(), vehicleData.getKilometers(), (Long)(vehicleData.getPrice().longValue()), rentACar);
         }
     }
 
