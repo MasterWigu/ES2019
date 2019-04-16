@@ -16,6 +16,7 @@ public class AdventureData {
 	private Integer age;
 	private String iban;
 	private Double margin;
+	private Boolean room;
 	private Boolean vehicle;
 	private Double amount;
 	private Adventure.State state;
@@ -39,6 +40,7 @@ public class AdventureData {
 		this.iban = adventure.getIban();
 		this.margin = adventure.getMargin();
 		this.vehicle = adventure.getRentVehicle();
+		this.room = adventure.getBookRoom();
 		this.state = adventure.getState().getValue();
 
 		this.paymentConfirmation = adventure.getPaymentConfirmation();
@@ -175,6 +177,14 @@ public class AdventureData {
 
 	public void setVehicle(Boolean vehicle) {
 		this.vehicle = vehicle;
+	}
+
+	public Boolean getRoom() {
+		return this.room;
+	}
+
+	public void setRoom(Boolean room) {
+		this.room = room;
 	}
 
 }

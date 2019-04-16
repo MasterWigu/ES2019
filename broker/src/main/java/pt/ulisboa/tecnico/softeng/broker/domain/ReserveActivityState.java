@@ -42,8 +42,14 @@ public class ReserveActivityState extends ReserveActivityState_Base {
             } else {
                 getAdventure().setState(State.PROCESS_PAYMENT);
             }
-        } else {
-            getAdventure().setState(State.BOOK_ROOM);
+        }
+
+        else {
+            if (getAdventure().shouldBookRoom()) {
+                getAdventure().setState(State.BOOK_ROOM);
+            } else {
+                getAdventure().setState(State.PROCESS_PAYMENT);
+            }
         }
     }
 
