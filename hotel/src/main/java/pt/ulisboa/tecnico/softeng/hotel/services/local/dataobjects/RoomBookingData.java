@@ -18,7 +18,7 @@ public class RoomBookingData {
 	private LocalDate departure;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate cancellationDate;
-	private double price;
+	private Long price;
 	private String paymentReference;
 	private String invoiceReference;
 	private String buyerNif;
@@ -90,8 +90,9 @@ public class RoomBookingData {
 		return this.cancellationDate;
 	}
 
-	public double getPrice() {
-		return this.price;
+	public Double getPrice() {
+		Double d = Double.valueOf(this.price);
+		return d / 1000;
 	}
 
 	public String getPaymentReference() {

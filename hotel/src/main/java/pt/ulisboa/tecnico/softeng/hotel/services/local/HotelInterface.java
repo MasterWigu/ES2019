@@ -31,10 +31,12 @@ public class HotelInterface {
 				.collect(Collectors.toList());
 	}
 
+	//Ver porque do 1000
+
 	@Atomic(mode = TxMode.WRITE)
 	public static void createHotel(HotelData hotelData) {
 		new Hotel(hotelData.getCode(), hotelData.getName(), hotelData.getNif(), hotelData.getIban(),
-				hotelData.getPriceSingle(), hotelData.getPriceDouble(), new Processor(new BankInterface(), new TaxInterface()));
+				(Long)((hotelData.getPriceSingle()).longValue() * 1000), (Long)((hotelData.getPriceDouble()).longValue() * 1000), new Processor(new BankInterface(), new TaxInterface()));
 	}
 
 	@Atomic(mode = TxMode.READ)
