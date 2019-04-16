@@ -14,8 +14,8 @@ import pt.ulisboa.tecnico.softeng.car.services.remote.exceptions.TaxException;
 public class Processor extends Processor_Base {
 	private static final String TRANSACTION_SOURCE = "CAR";
 
-	private final BankInterface bankInterface;
-	private final TaxInterface taxInterface;
+	private  BankInterface bankInterface;
+	private  TaxInterface taxInterface;
 
 	public Processor(BankInterface bankInterface, TaxInterface taxInterface) {
 		this.bankInterface = bankInterface;
@@ -38,6 +38,12 @@ public class Processor extends Processor_Base {
 	}
 
 	private void processInvoices() {
+		if (this.bankInterface == null){
+			this.bankInterface = new BankInterface();
+		}
+		if (this.taxInterface == null){
+			this.taxInterface = new TaxInterface();
+		}
 		Set<Renting> failedToProcess = new HashSet<>();
 		for (Renting renting : getRentingSet()) {
 			if (!renting.isCancelled()) {
