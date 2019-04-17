@@ -15,10 +15,10 @@ public class AdventureData {
 	private LocalDate end;
 	private Integer age;
 	private String iban;
-	private Double margin;
+	private Long margin;
 	private Boolean room;
 	private Boolean vehicle;
-	private Double amount;
+	private Long amount;
 	private Adventure.State state;
 
 	private String paymentConfirmation;
@@ -100,10 +100,11 @@ public class AdventureData {
 	}
 
 	public Double getAmount() {
-		return this.amount;
+		Double d = Double.valueOf(this.amount);
+		return d / 1000;
 	}
 
-	public void setAmount(Double amount) {
+	public void setAmount(Long amount) {
 		this.amount = amount;
 	}
 
@@ -164,10 +165,11 @@ public class AdventureData {
 	}
 
 	public Double getMargin() {
-		return this.margin;
+		Double d = Double.valueOf(this.margin);
+		return d / 1000;
 	}
 
-	public void setMargin(Double margin) {
+	public void setMargin(Long margin) {
 		this.margin = margin;
 	}
 
