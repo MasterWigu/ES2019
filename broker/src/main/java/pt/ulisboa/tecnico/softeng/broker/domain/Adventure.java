@@ -13,19 +13,19 @@ public class Adventure extends Adventure_Base {
         PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
     }
 
-    public Adventure(boolean bookRoom, Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, double margin) {
+    public Adventure(boolean bookRoom, Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, Long margin) {
         this(bookRoom, broker, roomType, begin, end, client, margin, false);
     }
 
-    public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
+    public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, Long margin, boolean rentVehicle) {
         this(false, broker, roomType, begin, end, client, margin, rentVehicle);
     }
 
-    public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, double margin) {
+    public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, Long margin) {
         this(false, broker, roomType, begin, end, client, margin, false);
     }
 
-    public Adventure(boolean bookRoom, Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
+    public Adventure(boolean bookRoom, Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, Long margin, boolean rentVehicle) {
         checkArguments(broker, begin, end, client, margin);
 
         setID(broker.getCode() + Integer.toString(broker.getCounter()));
@@ -40,7 +40,7 @@ public class Adventure extends Adventure_Base {
         broker.addAdventure(this);
         setBroker(broker);
 
-        setCurrentAmount(0.0);
+        setCurrentAmount(0L);
         setTime(DateTime.now());
 
         setState(State.RESERVE_ACTIVITY);
@@ -55,7 +55,7 @@ public class Adventure extends Adventure_Base {
         deleteDomainObject();
     }
 
-    private void checkArguments(Broker broker, LocalDate begin, LocalDate end, Client client, double margin) {
+    private void checkArguments(Broker broker, LocalDate begin, LocalDate end, Client client, Long margin) {
         if (client == null || broker == null || begin == null || end == null) {
             throw new BrokerException();
         }
@@ -68,7 +68,7 @@ public class Adventure extends Adventure_Base {
             throw new BrokerException();
         }
 
-        if (margin <= 0 || margin > 1) {
+        if (margin <= 0 || margin > 1000L) {
             throw new BrokerException();
         }
     }
@@ -81,11 +81,11 @@ public class Adventure extends Adventure_Base {
         return getClient().getIban();
     }
 
-    public void incAmountToPay(double toPay) {
+    public void incAmountToPay(Long toPay) {
         setCurrentAmount(getCurrentAmount() + toPay);
     }
 
-    public double getAmount() {
+    public Long getAmount() {
         return getCurrentAmount() * (1 + getMargin());
     }
 

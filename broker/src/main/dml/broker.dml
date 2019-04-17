@@ -37,8 +37,8 @@ class Adventure {
 	boolean invoiceCancelled;
 	boolean rentVehicle;
 	boolean bookRoom;
-	double margin;
-    double currentAmount;
+	Long margin;
+    Long currentAmount;
     DateTime time;
 }
 
