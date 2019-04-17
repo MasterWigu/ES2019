@@ -39,13 +39,13 @@ class VehicleConstructorMethodSpockTest extends SpockRollbackTestAbstractClass {
 		with(car) {
 			getPlate() == PLATE_CAR
 			getKilometers() == 10
-			getPrice() == 20.0
+			getPrice() == 20
 		}
 
 		with(motorcycle) {
 			getPlate() == PLATE_MOTORCYCLE
 			getKilometers() == 30
-			getPrice() == 40.0
+			getPrice() == 40
 		}
 	}
 
