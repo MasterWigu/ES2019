@@ -4,8 +4,8 @@ import pt.ulisboa.tecnico.softeng.bank.domain.Account;
 
 public class AccountData {
 	private String iban;
-	private Double balance;
-	private Double amount;
+	private Long balance;
+	private Long amount;
 
 	public AccountData() {
 	}
@@ -24,18 +24,20 @@ public class AccountData {
 	}
 
 	public Double getBalance() {
-		return this.balance;
+		Double d = Double.valueOf(this.balance);
+		return d / 1000;
 	}
 
-	public void setBalance(Double balance) {
+	public void setBalance(Long balance) {
 		this.balance = balance;
 	}
 
 	public Double getAmount() {
-		return this.amount;
+		Double d = Double.valueOf(this.amount);
+		return d / 1000;
 	}
 
-	public void setAmount(Double amount) {
+	public void setAmount(Long amount) {
 		this.amount = amount;
 	}
 
