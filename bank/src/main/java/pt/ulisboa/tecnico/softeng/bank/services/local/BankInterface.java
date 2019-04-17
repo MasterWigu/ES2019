@@ -92,7 +92,7 @@ public class BankInterface {
 	}
 
 	@Atomic(mode = TxMode.WRITE)
-	public static void deposit(String iban, double amount) {
+	public static void deposit(String iban, Long amount) {
 		Account account = getAccountByIban(iban);
 		if (account == null) {
 			throw new BankException();
@@ -102,7 +102,7 @@ public class BankInterface {
 	}
 
 	@Atomic(mode = TxMode.WRITE)
-	public static void withdraw(String iban, double amount) {
+	public static void withdraw(String iban, Long amount) {
 		Account account = getAccountByIban(iban);
 		if (account == null) {
 			throw new BankException();
@@ -134,10 +134,10 @@ public class BankInterface {
 		}
 
 		if (sourceAccount != null && targetAccount != null) {
-			Operation newOperation = sourceAccount.transferFrom(bankOperationData.getValue());
+			Operation newOperation = sourceAccount.transferFrom((Long)(bankOperationData.getValue().longValue() * 1000));
 			newOperation.setTransactionSource(bankOperationData.getTransactionSource());
 			newOperation.setTransactionReference(bankOperationData.getTransactionReference());
-			targetAccount.transferTo(bankOperationData.getValue());
+			targetAccount.transferTo((Long)(bankOperationData.getValue().longValue() * 1000));
 			return newOperation.getReference();
 		}
 		throw new BankException();
