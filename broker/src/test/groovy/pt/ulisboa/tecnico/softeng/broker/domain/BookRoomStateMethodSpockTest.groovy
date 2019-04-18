@@ -77,6 +77,36 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         adv.getRoomConfirmation() == ROOM_CONFIRMATION
     }
 
+    def 'success book room double'() {
+        given: 'an adventure with a double roomType'
+        def adv = new Adventure(broker, HotelInterface.Type.DOUBLE, BEGIN, END, client, MARGIN, false)
+        and: 'in book room state'
+        adv.setState(Adventure.State.BOOK_ROOM)
+        and: 'a successful room booking'
+        hotelInterface.reserveRoom(_) >> bookingData
+
+        when: 'a next step in the adventure is processed'
+        adv.process()
+
+        then: 'the room is confirmed'
+        adv.getRoomConfirmation() == ROOM_CONFIRMATION
+        and: 'the room is type double'
+        adv.getRoomType() == HotelInterface.Type.DOUBLE
+    }
+
+    def 'book room not needed'() {
+        given: 'an adventure that does not include room'
+        def adv = new Adventure(broker, null, BEGIN, END, client, MARGIN, true)
+
+        when: 'a next step in the adventure is processed'
+        adv.process()
+
+        then: 'the adventure state progresses to rent vehicle'
+        adv.getState().getValue() == Adventure.State.RESERVE_ACTIVITY
+        and: 'the room confirmation is null'
+        adv.getRoomConfirmation() == null
+    }
+
     @Unroll('#process_iterations #exception is thrown')
     def '#process_iterations #exception exception'() {
         given: 'the hotel reservation throws a hotel exception'
