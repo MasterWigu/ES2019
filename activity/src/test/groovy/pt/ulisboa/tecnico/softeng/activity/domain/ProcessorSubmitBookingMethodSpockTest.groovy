@@ -12,7 +12,7 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
     def CANCEL_PAYMENT_REFERENCE = 'CancelPaymentReference'
     def INVOICE_REFERENCE = 'InvoiceReference'
     def PAYMENT_REFERENCE = 'PaymentReference'
-    def AMOUNT = 30
+    def AMOUNT = 30000L
     def IBAN = 'IBAN'
     def NIF = '123456789'
 
@@ -23,7 +23,7 @@ class ProcessorSubmitBookingMethodSpockTest extends SpockRollbackTestAbstractCla
 
     def bankInterface
     def taxInterface
-    
+
     @Override
     def populate4Test() {
         bankInterface = Mock(BankInterface)

@@ -20,7 +20,7 @@ public class ReserveActivityState extends ReserveActivityState_Base {
         try {
             RestActivityBookingData result = activityInterface
                     .reserveActivity(new RestActivityBookingData(getAdventure().getBegin(), getAdventure().getEnd(),
-                            getAdventure().getAge(), getAdventure().getBroker().getNifAsBuyer(),
+                            getAdventure().getAge(), getAdventure().getBroker().getNif(),
                             getAdventure().getBroker().getIban(), getAdventure().getID()));
 
             getAdventure().setActivityConfirmation(result.getReference());
@@ -42,8 +42,16 @@ public class ReserveActivityState extends ReserveActivityState_Base {
             } else {
                 getAdventure().setState(State.PROCESS_PAYMENT);
             }
-        } else {
-            getAdventure().setState(State.BOOK_ROOM);
+        }
+
+        else {
+            if (getAdventure().shouldBookRoom()) {
+                getAdventure().setState(State.BOOK_ROOM);
+            } else {
+                if (getAdventure().shouldRentVehicle()) {
+                    getAdventure().setState(State.RENT_VEHICLE);
+                } else getAdventure().setState(State.PROCESS_PAYMENT);
+            }
         }
     }
 

@@ -9,21 +9,20 @@ import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBoo
 import java.util.Objects;
 
 public class Broker extends Broker_Base {
-    private final ActivityInterface activityInterface;
-    private final HotelInterface hotelInterface;
-    private final CarInterface carInterface;
-    private final BankInterface bankInterface;
-    private final TaxInterface taxInterface;
+    private  ActivityInterface activityInterface;
+    private  HotelInterface hotelInterface;
+    private  CarInterface carInterface;
+    private  BankInterface bankInterface;
+    private  TaxInterface taxInterface;
 
-    public Broker(String code, String name, String nifAsSeller, String nifAsBuyer, String iban,
+    public Broker(String code, String name, String nif, String iban,
                   ActivityInterface activityInterface, HotelInterface hotelInterface, CarInterface carInterface,
                   BankInterface bankInterface, TaxInterface taxInterface) {
-        checkArguments(code, name, nifAsSeller, nifAsBuyer, iban);
+        checkArguments(code, name, nif, iban);
 
         setCode(code);
         setName(name);
-        setNifAsSeller(nifAsSeller);
-        setNifAsBuyer(nifAsBuyer);
+        setNif(nif);
         setIban(iban);
 
         this.activityInterface = activityInterface;
@@ -53,14 +52,9 @@ public class Broker extends Broker_Base {
         deleteDomainObject();
     }
 
-    private void checkArguments(String code, String name, String nifAsSeller, String nifAsBuyer, String iban) {
+    private void checkArguments(String code, String name, String nif, String iban) {
         if (code == null || code.trim().length() == 0 || name == null || name.trim().length() == 0
-                || nifAsSeller == null || nifAsSeller.trim().length() == 0 || nifAsBuyer == null
-                || nifAsBuyer.trim().length() == 0 || iban == null || iban.trim().length() == 0) {
-            throw new BrokerException();
-        }
-
-        if (nifAsSeller.equals(nifAsBuyer)) {
+                || nif == null || nif.trim().length() == 0 || iban == null || iban.trim().length() == 0) {
             throw new BrokerException();
         }
 
@@ -71,8 +65,7 @@ public class Broker extends Broker_Base {
         }
 
         for (Broker broker : FenixFramework.getDomainRoot().getBrokerSet()) {
-            if (broker.getNifAsSeller().equals(nifAsSeller) || broker.getNifAsSeller().equals(nifAsBuyer)
-                    || broker.getNifAsBuyer().equals(nifAsSeller) || broker.getNifAsBuyer().equals(nifAsBuyer)) {
+            if (broker.getNif().equals(nif)) {
                 throw new BrokerException();
             }
         }
@@ -93,7 +86,7 @@ public class Broker extends Broker_Base {
     }
 
     public void bulkBooking(int number, LocalDate arrival, LocalDate departure) {
-        BulkRoomBooking bulkBooking = new BulkRoomBooking(this, number, arrival, departure, getNifAsBuyer(), getIban());
+        BulkRoomBooking bulkBooking = new BulkRoomBooking(this, number, arrival, departure, getNif(), getIban());
         bulkBooking.processBooking();
     }
 
@@ -111,23 +104,39 @@ public class Broker extends Broker_Base {
 
 
     public ActivityInterface getActivityInterface() {
+        if (this.activityInterface == null) {
+            this.activityInterface = new ActivityInterface();
+        }
         return this.activityInterface;
+
     }
 
     public HotelInterface getHotelInterface() {
+        if (this.hotelInterface == null) {
+            this.hotelInterface = new HotelInterface();
+        }
         return this.hotelInterface;
     }
 
     public CarInterface getCarInterface() {
+        if (this.carInterface == null) {
+            this.carInterface = new CarInterface();
+        }
         return this.carInterface;
     }
 
     public BankInterface getBankInterface() {
+        if (this.bankInterface == null){
+            this.bankInterface = new BankInterface();
+        }
         return this.bankInterface;
     }
 
 
     public TaxInterface getTaxInterface() {
+        if (this.taxInterface == null){
+            this.taxInterface = new TaxInterface();
+        }
         return this.taxInterface;
     }
 

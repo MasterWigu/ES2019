@@ -16,7 +16,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
     @Override
     def populate4Test() {
         hotelInterface = Mock(HotelInterface)
-        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN,
+        broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, BROKER_IBAN,
                 new ActivityInterface(), hotelInterface, new CarInterface(), new BankInterface(), new TaxInterface())
         def bulk = new BulkRoomBooking(broker, NUMBER_OF_BULK, BEGIN, END, NIF_AS_BUYER, CLIENT_IBAN)
         new Reference(bulk, REF_ONE)
@@ -25,11 +25,11 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         adventure = new Adventure(broker, ROOMTYPE, BEGIN, END, client, MARGIN, false, RENTINGTYPE)
 
         bookingData = new RestRoomBookingData()
-        bookingData.setRoomType(SINGLE)
+        bookingData.setRoomType(ROOMTYPE.toString())
         bookingData.setArrival(BEGIN)
         bookingData.setDeparture(END)
         bookingData.setReference(ROOM_CONFIRMATION)
-        bookingData.setPrice(80.0)
+        bookingData.setPrice(80000L)
 
         adventure.setState(Adventure.State.BOOK_ROOM)
     }
@@ -75,6 +75,36 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         adv.getState().getValue() == Adventure.State.RENT_VEHICLE
         and: 'the room is confirmed'
         adv.getRoomConfirmation() == ROOM_CONFIRMATION
+    }
+
+    def 'success book room double'() {
+        given: 'an adventure with a double roomType'
+        def adv = new Adventure(broker, HotelInterface.Type.DOUBLE, BEGIN, END, client, MARGIN, false)
+        and: 'in book room state'
+        adv.setState(Adventure.State.BOOK_ROOM)
+        and: 'a successful room booking'
+        hotelInterface.reserveRoom(_) >> bookingData
+
+        when: 'a next step in the adventure is processed'
+        adv.process()
+
+        then: 'the room is confirmed'
+        adv.getRoomConfirmation() == ROOM_CONFIRMATION
+        and: 'the room is type double'
+        adv.getRoomType() == HotelInterface.Type.DOUBLE
+    }
+
+    def 'book room not needed'() {
+        given: 'an adventure that does not include room'
+        def adv = new Adventure(broker, null, BEGIN, END, client, MARGIN, true)
+
+        when: 'a next step in the adventure is processed'
+        adv.process()
+
+        then: 'the adventure state progresses to rent vehicle'
+        adv.getState().getValue() == Adventure.State.RESERVE_ACTIVITY
+        and: 'the room confirmation is null'
+        adv.getRoomConfirmation() == null
     }
 
     @Unroll('#process_iterations #exception is thrown')

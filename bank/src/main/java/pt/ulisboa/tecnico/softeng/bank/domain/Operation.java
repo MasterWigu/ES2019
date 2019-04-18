@@ -9,7 +9,7 @@ public class Operation extends Operation_Base {
 		DEPOSIT, WITHDRAW, TRANSFER
 	};
 
-	public Operation(Type type, Account sAccount, double value) {
+	public Operation(Type type, Account sAccount, Long value) {
 		checkArguments(type, sAccount, value);
 
 		setReference(sAccount.getBank().getCode() + Integer.toString(sAccount.getBank().getCounter()));
@@ -23,7 +23,7 @@ public class Operation extends Operation_Base {
 		setBank(sAccount.getBank());
 	}
 
-	public Operation(Type type, Account sAccount, Account tAccount, double value) {
+	public Operation(Type type, Account sAccount, Account tAccount, Long value) {
 		checkArguments(type, sAccount, value);
 
 		setReference(sAccount.getBank().getCode() + Integer.toString(sAccount.getBank().getCounter()));
@@ -45,7 +45,7 @@ public class Operation extends Operation_Base {
 		deleteDomainObject();
 	}
 
-	private void checkArguments(Type type, Account account, double value) {
+	private void checkArguments(Type type, Account account, Long value) {
 		if (type == null || account == null || value <= 0) {
 			throw new BankException();
 		}
@@ -54,7 +54,7 @@ public class Operation extends Operation_Base {
 		}
 	}
 
-	private void checkArguments(Type type, Account sAccount, Account tAccount, double value) {
+	private void checkArguments(Type type, Account sAccount, Account tAccount, Long value) {
 		if (type == null || sAccount == null || tAccount == null || value <= 0) {
 			throw new BankException();
 		}

@@ -18,7 +18,7 @@ public class RentingData {
 	private String paymentReference;
 	private String invoiceReference;
 	private String cancellationReference;
-	private Double price;
+	private Long price;
 	private String buyerNIF;
 	private String buyerIBAN;
 	private Vehicle.Type type;
@@ -94,7 +94,8 @@ public class RentingData {
 	}
 
 	public Double getPrice() {
-		return this.price;
+		Double d = Double.valueOf(this.price);
+		return d / 1000;
 	}
 
 	public String getBuyerNIF() {

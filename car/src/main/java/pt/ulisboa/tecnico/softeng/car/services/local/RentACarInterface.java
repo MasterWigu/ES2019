@@ -35,7 +35,7 @@ public class RentACarInterface {
     public List<VehicleData> getVehicles(final String code) {
         final RentACar rentACar = getRentACar(code);
         return rentACar.getVehicleSet().stream().map(v -> new VehicleData(getVehicleType(v), v.getPlate(),
-                v.getKilometers(), v.getPrice(), toRentACarData(v.getRentACar()))).collect(Collectors.toList());
+                v.getKilometers(), (Long)(v.getPrice().longValue() * 1000), toRentACarData(v.getRentACar()))).collect(Collectors.toList());
     }
 
     @Atomic(mode = Atomic.TxMode.READ)
@@ -111,15 +111,15 @@ public class RentACarInterface {
 
     @Atomic(mode = Atomic.TxMode.WRITE)
     public void createVehicle(final String code, final VehicleData vehicleData) {
-        if (vehicleData.getKilometers() == null || vehicleData.getPrice() == null) {
+        if (vehicleData.getKilometers() == null || (Long)(vehicleData.getPrice().longValue() * 1000) == null) {
             throw new CarException();
         }
 
         final RentACar rentACar = getRentACar(code);
         if (vehicleData.getType() == Vehicle.Type.CAR) {
-            new Car(vehicleData.getPlate(), vehicleData.getKilometers(), vehicleData.getPrice(), rentACar);
+            new Car(vehicleData.getPlate(), vehicleData.getKilometers(), (Long)(vehicleData.getPrice().longValue() * 1000), rentACar);
         } else {
-            new Motorcycle(vehicleData.getPlate(), vehicleData.getKilometers(), vehicleData.getPrice(), rentACar);
+            new Motorcycle(vehicleData.getPlate(), vehicleData.getKilometers(), (Long)(vehicleData.getPrice().longValue() * 1000), rentACar);
         }
     }
 
@@ -157,7 +157,7 @@ public class RentACarInterface {
     @Atomic(mode = Atomic.TxMode.READ)
     public VehicleData getVehicleData(final String code, final String plate) {
         final Vehicle v = getVehicle(code, plate);
-        return new VehicleData(getVehicleType(v), v.getPlate(), v.getKilometers(), v.getPrice(), getRentACarData(code));
+        return new VehicleData(getVehicleType(v), v.getPlate(), v.getKilometers(), (Long)(v.getPrice().longValue() * 1000), getRentACarData(code));
     }
 
     private Vehicle getVehicle(final String code, final String plate) {

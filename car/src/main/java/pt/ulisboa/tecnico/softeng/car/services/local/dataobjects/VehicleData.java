@@ -6,12 +6,12 @@ public class VehicleData {
     private Vehicle.Type type;
     private String plate;
     private Integer kilometers;
-    private Double price;
+    private Long price;
     private RentACarData rentacar;
 
     public VehicleData() { }
 
-    public VehicleData(Vehicle.Type type, String plate, int kilometers, double price, RentACarData rentacar) {
+    public VehicleData(Vehicle.Type type, String plate, int kilometers, Long price, RentACarData rentacar) {
         this.type = type;
         this.plate = plate;
         this.kilometers = kilometers;
@@ -44,10 +44,11 @@ public class VehicleData {
     }
 
     public Double getPrice() {
-        return price;
+      Double d = Double.valueOf(this.price);
+      return d / 1000;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

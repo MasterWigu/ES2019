@@ -31,7 +31,7 @@ public class BrokerInterface {
 
     @Atomic(mode = TxMode.WRITE)
     public static void createBroker(BrokerData brokerData) {
-        new Broker(brokerData.getCode(), brokerData.getName(), brokerData.getNifAsSeller(), brokerData.getNifAsBuyer(),
+        new Broker(brokerData.getCode(), brokerData.getName(), brokerData.getNif(),
                 brokerData.getIban(), new ActivityInterface(), new HotelInterface(), new CarInterface(), new BankInterface(), new TaxInterface());
     }
 
@@ -72,7 +72,7 @@ public class BrokerInterface {
         Broker broker = getBrokerByCode(brokerCode);
         Client client = broker.getClientByNIF(clientNif);
         new Adventure(broker, adventureData.getRoomType(), adventureData.getBegin(), adventureData.getEnd(), client,
-                adventureData.getMargin() != null ? adventureData.getMargin() : -1, adventureData.getVehicle(), adventureData.getRentingType());
+                (Long)(adventureData.getMargin().longValue() * 1000) != null ? (Long)(adventureData.getMargin().longValue() * 1000) : -1, adventureData.getVehicle(), adventureData.getRentingType());
     }
 
     @Atomic(mode = TxMode.WRITE)

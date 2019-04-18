@@ -12,8 +12,8 @@ public class HotelData {
 	private String name;
 	private String nif;
 	private String iban;
-	private Double priceSingle;
-	private Double priceDouble;
+	private Long priceSingle;
+	private Long priceDouble;
 	private List<RoomData> rooms;
 
 	public HotelData() {
@@ -60,18 +60,20 @@ public class HotelData {
 	}
 
 	public Double getPriceSingle() {
-		return this.priceSingle;
+		Double d = Double.valueOf(this.priceSingle);
+		return d / 1000;
 	}
 
-	public void setPriceSingle(Double priceSingle) {
+	public void setPriceSingle(Long priceSingle) {
 		this.priceSingle = priceSingle;
 	}
 
 	public Double getPriceDouble() {
-		return this.priceDouble;
+		Double d = Double.valueOf(this.priceDouble);
+		return d / 1000;
 	}
 
-	public void setPriceDouble(Double priceDouble) {
+	public void setPriceDouble(Long priceDouble) {
 		this.priceDouble = priceDouble;
 	}
 

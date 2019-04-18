@@ -18,13 +18,13 @@ class RentVehicleStateMethodSpockTest extends SpockRollbackTestAbstractClass {
         carInterface = Mock(CarInterface)
         taxInterface = Mock(TaxInterface)
 
-        def broker = new Broker("BR01", "eXtremeADVENTURE", BROKER_NIF_AS_SELLER, NIF_AS_BUYER, BROKER_IBAN, new ActivityInterface(), new HotelInterface(), carInterface, new BankInterface(), taxInterface)
+        def broker = new Broker("BR01", "eXtremeADVENTURE", NIF_AS_BUYER, BROKER_IBAN, new ActivityInterface(), new HotelInterface(), carInterface, new BankInterface(), taxInterface)
         def client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
         adventure = new Adventure(broker, ROOMTYPE, BEGIN, END, client, MARGIN, true, RENTINGTYPE)
 
         rentingData = new RestRentingData()
         rentingData.setReference(RENTING_CONFIRMATION)
-        rentingData.setPrice(76.78)
+        rentingData.setPrice(76780L)
 
         adventure.setState(Adventure.State.RENT_VEHICLE)
     }

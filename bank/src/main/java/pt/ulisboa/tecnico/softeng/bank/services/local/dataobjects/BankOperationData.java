@@ -9,7 +9,7 @@ public class BankOperationData {
 	private String type;
 	private String sourceIban;
 	private String targetIban;
-	private Double value;
+	private Long value;
 	private DateTime time;
 	private String transactionSource;
 	private String transactionReference;
@@ -30,7 +30,7 @@ public class BankOperationData {
 		this.transactionReference = operation.getTransactionReference();
 	}
 
-	public BankOperationData(String sourceIban, String targetIban, double value, String transactionSource, String transactionReference) {
+	public BankOperationData(String sourceIban, String targetIban, Long value, String transactionSource, String transactionReference) {
 		this.sourceIban = sourceIban;
 		this.targetIban = targetIban;
 		this.value = value;
@@ -71,10 +71,11 @@ public class BankOperationData {
 	}
 
 	public Double getValue() {
-		return this.value;
+		Double d = Double.valueOf(this.value);
+		return d / 1000;
 	}
 
-	public void setValue(Double value) {
+	public void setValue(Long value) {
 		this.value = value;
 	}
 

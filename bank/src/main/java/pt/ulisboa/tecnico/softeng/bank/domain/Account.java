@@ -8,7 +8,7 @@ public class Account extends Account_Base {
 		checkArguments(bank, client);
 
 		setIBAN(bank.getCode() + Integer.toString(bank.getCounter()));
-		setBalance(0);
+		setBalance(0L);
 
 		setClient(client);
 		setBank(bank);
@@ -36,7 +36,7 @@ public class Account extends Account_Base {
 
 	}
 
-	public Operation deposit(double amount) {
+	public Operation deposit(Long amount) {
 		if (amount <= 0) {
 			throw new BankException();
 		}
@@ -46,7 +46,7 @@ public class Account extends Account_Base {
 		return new Operation(Operation.Type.DEPOSIT, this, amount);
 	}
 
-	public Operation withdraw(double amount) {
+	public Operation withdraw(Long amount) {
 		if (amount <= 0 || amount > getBalance()) {
 			throw new BankException();
 		}
@@ -56,7 +56,7 @@ public class Account extends Account_Base {
 		return new Operation(Operation.Type.WITHDRAW, this, amount);
 	}
 
-	public void transferTo(double amount) {
+	public void transferTo(Long amount) {
 		if (amount <= 0) {
 			throw new BankException();
 		}
@@ -64,7 +64,7 @@ public class Account extends Account_Base {
 	}
 
 
-	public Operation transferFrom(double amount) {
+	public Operation transferFrom(Long amount) {
 		if (amount <= 0 || amount > getBalance()) {
 			throw new BankException();
 		}
