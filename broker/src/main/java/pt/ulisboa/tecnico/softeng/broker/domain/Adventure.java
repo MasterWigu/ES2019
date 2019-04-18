@@ -13,19 +13,11 @@ public class Adventure extends Adventure_Base {
         PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
     }
 
-    public Adventure(boolean bookRoom, Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, Long margin) {
-        this(bookRoom, broker, roomType, begin, end, client, margin, false);
+    public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, Long margin) {
+        this(broker, roomType, begin, end, client, margin, false);
     }
 
     public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, Long margin, boolean rentVehicle) {
-        this(false, broker, roomType, begin, end, client, margin, rentVehicle);
-    }
-
-    public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, Long margin) {
-        this(false, broker, roomType, begin, end, client, margin, false);
-    }
-
-    public Adventure(boolean bookRoom, Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, Long margin, boolean rentVehicle) {
         checkArguments(broker, begin, end, client, margin);
 
         setID(broker.getCode() + Integer.toString(broker.getCounter()));
@@ -34,7 +26,6 @@ public class Adventure extends Adventure_Base {
         setEnd(end);
         setMargin(margin);
         setRentVehicle(rentVehicle);
-        setBookRoom(bookRoom);
         setClient(client);
 
         broker.addAdventure(this);
@@ -94,7 +85,10 @@ public class Adventure extends Adventure_Base {
     }
 
     public boolean shouldBookRoom() {
-        return getBookRoom();
+        if (getRoomType() != null)
+            return true;
+        else
+            return false;
     }
 
     public void setState(State state) {
