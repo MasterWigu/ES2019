@@ -30,7 +30,7 @@ class CancelledStateProcessMethodSpockTest extends SpockRollbackTestAbstractClas
 
         client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
 
-        adventure = new Adventure(broker, ROOMTYPE, BEGIN, END, client, MARGIN)
+        adventure = new Adventure(broker, ROOMTYPE, BEGIN, END, client, MARGIN, true, RENTINGTYPE)
         adventure.setState(Adventure.State.CANCELLED)
 
     }

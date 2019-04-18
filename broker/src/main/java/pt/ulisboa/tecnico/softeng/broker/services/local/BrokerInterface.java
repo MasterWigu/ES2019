@@ -72,7 +72,7 @@ public class BrokerInterface {
         Broker broker = getBrokerByCode(brokerCode);
         Client client = broker.getClientByNIF(clientNif);
         new Adventure(broker, adventureData.getRoomType(), adventureData.getBegin(), adventureData.getEnd(), client,
-                adventureData.getMargin() != null ? adventureData.getMargin() : -1, adventureData.getVehicle());
+                adventureData.getMargin() != null ? adventureData.getMargin() : -1, adventureData.getVehicle(), adventureData.getRentingType());
     }
 
     @Atomic(mode = TxMode.WRITE)

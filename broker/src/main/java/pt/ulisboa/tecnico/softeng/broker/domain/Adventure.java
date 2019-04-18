@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -7,17 +9,18 @@ import org.slf4j.LoggerFactory;
 
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface.Type;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface;
 
 public class Adventure extends Adventure_Base {
     public enum State {
         PROCESS_PAYMENT, RESERVE_ACTIVITY, BOOK_ROOM, RENT_VEHICLE, UNDO, CONFIRMED, CANCELLED, TAX_PAYMENT
     }
 
-    public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, double margin) {
-        this(broker, roomType, begin, end, client, margin, false);
+    public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, double margin, CarInterface.Type rentingType) {
+        this(broker, roomType, begin, end, client, margin, false, rentingType);
     }
 
-    public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle) {
+    public Adventure(Broker broker, Type roomType, LocalDate begin, LocalDate end, Client client, double margin, boolean rentVehicle,CarInterface.Type rentingType) {
         checkArguments(broker, begin, end, client, margin);
 
         setID(broker.getCode() + Integer.toString(broker.getCounter()));
@@ -26,6 +29,7 @@ public class Adventure extends Adventure_Base {
         setEnd(end);
         setMargin(margin);
         setRentVehicle(rentVehicle);
+        setRentingType(rentingType);
         setClient(client);
 
         broker.addAdventure(this);
@@ -37,7 +41,7 @@ public class Adventure extends Adventure_Base {
         setState(State.RESERVE_ACTIVITY);
     }
 
-    public void delete() {
+	public void delete() {
         setBroker(null);
         setClient(null);
 
