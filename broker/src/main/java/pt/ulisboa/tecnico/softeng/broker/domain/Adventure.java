@@ -1,7 +1,5 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
