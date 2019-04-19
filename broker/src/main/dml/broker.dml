@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
 enum pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface.Type as Type;
+enum pt.ulisboa.tecnico.softeng.broker.services.remote.CarInterface.Type as CType;
 
 class Broker {
 	String code;
@@ -35,9 +36,10 @@ class Adventure {
 	String invoiceReference;
 	boolean invoiceCancelled;
 	boolean rentVehicle;
+	CType rentingType;
 	Long margin;
-    Long currentAmount;
-    DateTime time;
+  Long currentAmount;
+  DateTime time;
 }
 
 relation BrokerHasAdventures {

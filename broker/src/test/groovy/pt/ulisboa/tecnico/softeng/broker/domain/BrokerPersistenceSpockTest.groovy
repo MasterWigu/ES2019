@@ -10,7 +10,7 @@ class BrokerPersistenceSpockTest extends SpockPersistenceTestAbstractClass imple
         def broker = new Broker(BROKER_CODE, BROKER_NAME, BROKER_NIF_AS_SELLER, BROKER_IBAN,
                 new ActivityInterface(), new HotelInterface(), new CarInterface(), new BankInterface(), new TaxInterface())
         def client = new Client(broker, CLIENT_IBAN, CLIENT_NIF, DRIVING_LICENSE, AGE)
-        new Adventure(broker, ROOMTYPE, this.BEGIN, this.END, client, MARGIN, true)
+        new Adventure(broker, ROOMTYPE, this.BEGIN, this.END, client, MARGIN, true, RENTINGTYPE)
 
         def bulk = new BulkRoomBooking(broker, NUMBER_OF_BULK, this.BEGIN, this.END, NIF_AS_BUYER, CLIENT_IBAN)
 
