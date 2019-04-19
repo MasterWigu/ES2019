@@ -79,7 +79,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 
     def 'success book room double'() {
         given: 'an adventure with a double roomType'
-        def adv = new Adventure(broker, HotelInterface.Type.DOUBLE, BEGIN, END, client, MARGIN, false)
+        def adv = new Adventure(broker, HotelInterface.Type.DOUBLE, BEGIN, END, client, MARGIN, false, RENTINGTYPE)
         and: 'in book room state'
         adv.setState(Adventure.State.BOOK_ROOM)
         and: 'a successful room booking'
@@ -96,7 +96,7 @@ class BookRoomStateMethodSpockTest extends SpockRollbackTestAbstractClass {
 
     def 'book room not needed'() {
         given: 'an adventure that does not include room'
-        def adv = new Adventure(broker, null, BEGIN, END, client, MARGIN, true)
+        def adv = new Adventure(broker, null, BEGIN, END, client, MARGIN, true, RENTINGTYPE)
 
         when: 'a next step in the adventure is processed'
         adv.process()
