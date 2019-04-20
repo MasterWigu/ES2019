@@ -104,8 +104,9 @@ public class AdventureData {
 		return d / 1000;
 	}
 
-	public void setAmount(Long amount) {
-		this.amount = amount;
+	public void setAmount(Double amount) {
+		Long l = (Long)(amount.longValue() * 1000);
+		this.amount = l;
 	}
 
 	public Adventure.State getState() {
@@ -169,8 +170,9 @@ public class AdventureData {
 		return d / 1000;
 	}
 
-	public void setMargin(Long margin) {
-		this.margin = margin;
+	public void setMargin(Double margin) {
+		Long l = (Long)(margin.longValue() * 1000);
+		this.margin = l;
 	}
 
 	public Boolean getVehicle() {
