@@ -75,8 +75,9 @@ public class BankOperationData {
 		return d / 1000;
 	}
 
-	public void setValue(Long value) {
-		this.value = value;
+	public void setValue(Double value) {
+		Long l = (Long)(value.longValue() * 1000);
+		this.value = l;
 	}
 
 	public DateTime getTime() {

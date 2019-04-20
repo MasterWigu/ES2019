@@ -28,8 +28,9 @@ public class AccountData {
 		return d / 1000;
 	}
 
-	public void setBalance(Long balance) {
-		this.balance = balance;
+	public void setBalance(Double balance) {
+		Long l = (Long)(balance.longValue() * 1000);
+		this.balance = l;
 	}
 
 	public Double getAmount() {
@@ -37,8 +38,9 @@ public class AccountData {
 		return d / 1000;
 	}
 
-	public void setAmount(Long amount) {
-		this.amount = amount;
+	public void setAmount(Double amount) {
+		Long l = (Long)(amount.longValue() * 1000);
+		this.amount = l;
 	}
 
 }
