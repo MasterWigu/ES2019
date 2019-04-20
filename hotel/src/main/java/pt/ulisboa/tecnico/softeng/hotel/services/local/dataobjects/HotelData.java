@@ -64,8 +64,9 @@ public class HotelData {
 		return d / 1000;
 	}
 
-	public void setPriceSingle(Long priceSingle) {
-		this.priceSingle = priceSingle;
+	public void setPriceSingle(Double priceSingle) {
+		Long l = (Long)(priceSingle.longValue() * 1000);
+		this.priceSingle = l;
 	}
 
 	public Double getPriceDouble() {
@@ -73,8 +74,9 @@ public class HotelData {
 		return d / 1000;
 	}
 
-	public void setPriceDouble(Long priceDouble) {
-		this.priceDouble = priceDouble;
+	public void setPriceDouble(Double priceDouble) {
+		Long l = (Long)(priceDouble.longValue() * 1000);
+		this.priceDouble = l;
 	}
 
 	public List<RoomData> getRooms() {
