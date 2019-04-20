@@ -87,7 +87,7 @@ public class TaxInterface {
 			buyer = IRS.getIRSInstance().getTaxPayerByNIF(invoiceData.getBuyerNif());
 		}
 
-		new Invoice(invoiceData.getValue(), invoiceData.getDate(), itemType, seller, buyer);
+		new Invoice((Long)(invoiceData.getValue().longValue() * 1000), invoiceData.getDate(), itemType, seller, buyer);
 	}
 
 	@Atomic(mode = TxMode.WRITE)
@@ -101,7 +101,7 @@ public class TaxInterface {
 		TaxPayer buyer = IRS.getIRSInstance().getTaxPayerByNIF(invoiceData.getBuyerNif());
 		ItemType itemType = IRS.getIRSInstance().getItemTypeByName(invoiceData.getItemType());
 
-		invoice = new Invoice(invoiceData.getValue(), invoiceData.getDate(), itemType, seller, buyer,
+		invoice = new Invoice((Long)(invoiceData.getValue().longValue()), invoiceData.getDate(), itemType, seller, buyer,
 				invoiceData.getTime());
 
 		return invoice.getReference();
