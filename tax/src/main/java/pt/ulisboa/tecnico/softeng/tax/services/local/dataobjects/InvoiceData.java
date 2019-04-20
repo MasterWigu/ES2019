@@ -12,16 +12,16 @@ public class InvoiceData {
 	private String sellerNif;
 	private String buyerNif;
 	private String itemType;
-	private Double value;
+	private Long value;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
-	private Double iva;
+	private Long iva;
 	private DateTime time;
 
 	public InvoiceData() {
 	}
 
-	public InvoiceData(String reference, String sellerNif, String buyerNif, String itemType, Double value,
+	public InvoiceData(String reference, String sellerNif, String buyerNif, String itemType, Long value,
 			LocalDate date, DateTime time) {
 		if (reference == null) {
 			throw new TaxException();
@@ -79,10 +79,11 @@ public class InvoiceData {
 	}
 
 	public Double getValue() {
-		return this.value;
+		Double d = Double.valueOf(this.value);
+		return d / 1000;
 	}
 
-	public void setValue(Double value) {
+	public void setValue(Long value) {
 		this.value = value;
 	}
 
@@ -95,10 +96,11 @@ public class InvoiceData {
 	}
 
 	public Double getIva() {
-		return this.iva;
+		Double d = Double.valueOf(this.iva);
+		return d / 1000;
 	}
 
-	public void setIva(Double iva) {
+	public void setIva(Long iva) {
 		this.iva = iva;
 	}
 

@@ -45,8 +45,8 @@ relation IRSHasItemTypes {
 class Invoice {
     String id;
 	String reference;
-	double value;
-	double iva;
+	Long value;
+	Long iva;
 	LocalDate date;
 	boolean cancelled;
 	DateTime time;
@@ -87,4 +87,3 @@ relation BuyerHasInvoices {
         multiplicity 0..*;
     }
 }
-

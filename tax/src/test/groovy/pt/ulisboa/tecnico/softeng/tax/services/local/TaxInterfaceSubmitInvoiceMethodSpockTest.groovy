@@ -17,7 +17,7 @@ class TaxInterfaceSubmitInvoiceMethodSpockTest extends SpockRollbackTestAbstract
 	@Shared def SELLER_NIF = '123456789'
 	@Shared def BUYER_NIF = '987654321'
 	@Shared def FOOD = 'FOOD'
-	@Shared def VALUE = 160
+	@Shared def VALUE = 160000L
 	@Shared def TAX = 16
 	@Shared def date = new LocalDate(2018, 02, 13)
 	@Shared def time = new DateTime(2018, 02, 13, 10, 10)
@@ -46,7 +46,7 @@ class TaxInterfaceSubmitInvoiceMethodSpockTest extends SpockRollbackTestAbstract
 			getSeller().getNif() == SELLER_NIF
 			getBuyer().getNif() == BUYER_NIF
 			getItemType().getName() == FOOD
-			160.0 == getValue()
+			160000L == getValue()
 			getDate() == date
 		}
 	}
@@ -90,8 +90,8 @@ class TaxInterfaceSubmitInvoiceMethodSpockTest extends SpockRollbackTestAbstract
 		REFERENCE | SELLER_NIF | ''        | FOOD | VALUE  | date | time
 		REFERENCE | SELLER_NIF | BUYER_NIF | null | VALUE  | date | time
 		REFERENCE | SELLER_NIF | BUYER_NIF | ''   | VALUE  | date | time
-		REFERENCE | SELLER_NIF | BUYER_NIF | FOOD | 0.0d   | date | time
-		REFERENCE | SELLER_NIF | BUYER_NIF | FOOD | -23.7d | date | time
+		REFERENCE | SELLER_NIF | BUYER_NIF | FOOD | 0L  | date | time
+		REFERENCE | SELLER_NIF | BUYER_NIF | FOOD | -23700L | date | time
 		REFERENCE | SELLER_NIF | BUYER_NIF | FOOD | VALUE  | date | null
 		REFERENCE | SELLER_NIF | BUYER_NIF | FOOD | VALUE  | new LocalDate(1969, 12, 31) | new DateTime(1969, 12, 31, 10, 10)
 	}
