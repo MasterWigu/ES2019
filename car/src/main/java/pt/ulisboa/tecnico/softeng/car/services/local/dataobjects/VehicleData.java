@@ -48,8 +48,9 @@ public class VehicleData {
       return d / 1000;
     }
 
-    public void setPrice(Long price) {
-        this.price = price;
+    public void setPrice(Double price) {
+        Long l = (Long)(price.longValue() * 1000);
+        this.price = l;
     }
 
     public RentACarData getRentacar() {
