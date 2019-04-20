@@ -99,8 +99,9 @@ public class ActivityOfferData {
 		return d / 1000;
 	}
 
-	public void setAmount(Long amount) {
-		this.amount = amount;
+	public void setAmount(Double amount) {
+		Long l = (Long)(amount.longValue() * 1000);
+		this.amount = l;
 	}
 
 	public String getName() {
