@@ -48,8 +48,9 @@
 					<th>Time</th>
  					<th>Reference</th>
  					<th>Type</th>
- 					<th>Iban</th>
- 					<th>Value</th>
+ 					<th>SourceIban</th>
+					<th>TargetIban</th>
+					<th>Value</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -57,7 +58,8 @@
 					<td th:text="${operation.time}">2017/04/01</td>
 					<td th:text="${operation.reference}">BK12344567</td>
 					<td th:text="${operation.type}">DEPOSIT</td>
-					<td th:text="${operation.iban}">123456</td>
+					<td th:text="${operation.sourceIban}">123456</td>
+					<td th:text="${operation.targetIban}">123456</td>
 					<td th:text="${operation.value}">200</td>
 				</tr>
 			</tbody>
