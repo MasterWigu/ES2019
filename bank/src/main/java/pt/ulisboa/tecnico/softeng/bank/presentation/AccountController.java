@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import pt.ulisboa.tecnico.softeng.bank.domain.Bank;
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 import pt.ulisboa.tecnico.softeng.bank.services.local.BankInterface;
 import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.AccountData;
 import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.BankData;
+import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.BankOperationData;
 import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.ClientData;
+import pt.ulisboa.tecnico.softeng.bank.services.remote.dataobjects.RestBankOperationData;
 
 @Controller
 @RequestMapping(value = "/banks/{code}/clients/{id}/accounts")
@@ -62,6 +65,7 @@ public class AccountController {
 			AccountData account = BankInterface.getAccountData(iban);
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", account);
+			model.addAttribute("bankOperation", new BankOperationData());
 			return "account";
 		} catch (BankException be) {
 			model.addAttribute("error", "Error: it was not possible to move to do the operations");
@@ -77,14 +81,17 @@ public class AccountController {
 		logger.info("accountDeposit bankCode:{}, clientId:{}, iban:{}, amount:{}", code, id, iban, account.getAmount());
 
 		try {
+			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAS "+ account.getAmount());
 			BankInterface.deposit(iban, account.getAmount() != null ? account.getAmountLong() : -1);
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));
+			model.addAttribute("bankOperation", new BankOperationData());
 			return "redirect:/banks/" + code + "/clients/" + id + "/accounts/" + iban + "/operations";
 		} catch (BankException be) {
 			model.addAttribute("error", "Error: it was not possible to execute the operation");
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));
+			model.addAttribute("bankOperation", new BankOperationData());
 			return "account";
 		}
 	}
@@ -99,14 +106,42 @@ public class AccountController {
 			BankInterface.withdraw(iban, account.getAmount() != null ? account.getAmountLong() : -1);
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));
+			model.addAttribute("bankOperation", new BankOperationData());
 			return "account";
 		} catch (BankException be) {
 			model.addAttribute("error", "Error: it was not possible to execute the operation");
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));
+			model.addAttribute("bankOperation", new BankOperationData());
 			return "account";
 		}
+	}
 
+	@RequestMapping(value = "/{iban}/transfer", method = RequestMethod.POST)
+	public String accountTransfer(Model model, @PathVariable String code, @PathVariable String id,
+								  @PathVariable String iban, @ModelAttribute BankOperationData bankOperation) {
+		/*logger.info("accountWithdraw bankCode:{}, clientId:{}, iban:{}, amount:{}", code, id, iban,
+				account.getAmount());*/
+
+		try {
+			RestBankOperationData restBankOperationData = new RestBankOperationData();
+			restBankOperationData.setSourceIban(iban);
+			restBankOperationData.setTargetIban(bankOperation.getTargetIban());
+			restBankOperationData.setValue(bankOperation.getValueLong());
+			restBankOperationData.setTransactionSource(bankOperation.getTransactionSource());
+			restBankOperationData.setTransactionReference(bankOperation.getTransactionReference());
+			BankInterface.processPayment(restBankOperationData);
+			model.addAttribute("client", BankInterface.getClientDataById(code, id));
+			model.addAttribute("account", BankInterface.getAccountData(iban));
+			model.addAttribute("bankOperation", new BankOperationData());
+			return "account";
+		} catch (BankException be) {
+			model.addAttribute("error", "Error: it was not possible to execute the operation");
+			model.addAttribute("client", BankInterface.getClientDataById(code, id));
+			model.addAttribute("account", BankInterface.getAccountData(iban));
+			model.addAttribute("bankOperation", new BankOperationData());
+			return "account";
+		}
 	}
 
 }
