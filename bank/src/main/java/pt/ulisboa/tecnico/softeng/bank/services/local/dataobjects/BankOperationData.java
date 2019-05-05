@@ -77,7 +77,7 @@ public class BankOperationData {
     }
 
     public void setValue(long value) {
-        this.value = Long.valueOf(value).doubleValue() * Bank.SCALE;
+        this.value = Long.valueOf(value).doubleValue() / Bank.SCALE;
     }
 
     public void setValue(Double value) {
