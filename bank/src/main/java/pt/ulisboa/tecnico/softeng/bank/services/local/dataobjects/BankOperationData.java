@@ -22,7 +22,7 @@ public class BankOperationData {
         this.type = operation.getType().name();
         this.sourceIban = operation.getSourceIban();
         this.targetIban = operation.getTargetIban();
-        setValue(operation.getValue());
+        this.value = new Double(operation.getValue()) / Bank.SCALE;
         this.time = operation.getTime();
         this.transactionSource = operation.getTransactionSource();
         this.transactionReference = operation.getTransactionReference();
@@ -73,7 +73,7 @@ public class BankOperationData {
     }
 
     public long getValueLong() {
-        return Math.round(this.value);
+        return Math.round(this.value*Bank.SCALE);
     }
 
     public void setValue(long value) {

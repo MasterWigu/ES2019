@@ -7,6 +7,7 @@ import pt.ulisboa.tecnico.softeng.bank.domain.*;
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.AccountData;
 import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.BankData;
+import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.BankOperationData;
 import pt.ulisboa.tecnico.softeng.bank.services.local.dataobjects.ClientData;
 import pt.ulisboa.tecnico.softeng.bank.services.remote.dataobjects.RestBankOperationData;
 
@@ -97,6 +98,7 @@ public class BankInterface {
         }
 
         account.deposit(amount);
+
     }
 
     @Atomic(mode = TxMode.WRITE)
@@ -129,6 +131,7 @@ public class BankInterface {
                 .flatMap(bank -> bank.getAccountSet().stream())
                 .filter(account -> account.getIban().equals(bankOperationData.getTargetIban()))
                 .findAny().orElse(null);
+
 
         if (sourceAccount != null && targetAccount != null) {
             WithdrawOperation withdrawOperation = sourceAccount.withdraw(bankOperationData.getValue());
