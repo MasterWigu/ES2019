@@ -68,8 +68,6 @@
 						<span th:if="${!operation.getReference().contains('CANCEL')}">
 							<input class="btn btn-primary" type="submit" value="Revert" id="revertBtn"/>
 						</span>
-
-						<!--<input class="btn btn-primary" type="submit" value="Revert"/>-->
 					</form></td>
 				</tr>
 			</tbody>
@@ -77,13 +75,3 @@
 	</div>
 </body>
 </html>
-<!-- <?php
-								if(strpos(${operation.reference}, 'CANCEL') !== false) {
-									echo ' disabled=disabled ';
-								}
-							?>
-
-<span th:if="${operation.reference.endsWith('CANCEL')} == false">
-							<input class="btn btn-primary" type="submit" value="Revert"/>
-						</span>
-							-->
