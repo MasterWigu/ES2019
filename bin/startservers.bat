@@ -10,3 +10,4 @@ cd ../car
 start mvn clean spring-boot:run
 cd ../broker
 start mvn clean spring-boot:run
+cd ../bin
