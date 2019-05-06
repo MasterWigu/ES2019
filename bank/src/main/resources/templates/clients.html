@@ -61,9 +61,29 @@
 					<td th:text="${operation.sourceIban}">123456</td>
 					<td th:text="${operation.targetIban}">123456</td>
 					<td th:text="${operation.value}">200</td>
+					<td><form class="form-inline"
+							  th:action="@{/banks/{code}/clients(code=${bank.code})}"
+							  th:object="${client}" th:method="delete">
+						<input name="reference" th:value="${operation.reference}" style="display:none;"/>
+						<span th:if="${!operation.getReference().contains('CANCEL')}">
+							<input class="btn btn-primary" type="submit" value="Revert" id="revertBtn"/>
+						</span>
+
+						<!--<input class="btn btn-primary" type="submit" value="Revert"/>-->
+					</form></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 </body>
 </html>
+<!-- <?php
+								if(strpos(${operation.reference}, 'CANCEL') !== false) {
+									echo ' disabled=disabled ';
+								}
+							?>
+
+<span th:if="${operation.reference.endsWith('CANCEL')} == false">
+							<input class="btn btn-primary" type="submit" value="Revert"/>
+						</span>
+							-->
