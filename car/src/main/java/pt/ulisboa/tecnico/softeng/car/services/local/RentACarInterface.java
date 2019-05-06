@@ -21,7 +21,7 @@ public class RentACarInterface {
     @Atomic(mode = Atomic.TxMode.READ)
     public List<RentACarData> getRentACars() {
         return FenixFramework.getDomainRoot().getRentACarSet().stream()
-                .map(r -> new RentACarData(r.getCode(), r.getName(), r.getNif(), r.getIban(), r.getVehicleSet().size()))
+                .map(r -> new RentACarData(r.getCode(), r.getName(), r.getNif(), r.getIban(), r.getVehicleSet().size(), r.getProcessor()))
                 .collect(Collectors.toList());
     }
 
@@ -42,6 +42,12 @@ public class RentACarInterface {
     public List<RentingData> getRentings(final String code, final String plate) {
         final Vehicle vehicle = getVehicle(code, plate);
         return vehicle.getRentingSet().stream().map(RentingData::new).collect(Collectors.toList());
+    }
+
+    @Atomic(mode = Atomic.TxMode.READ)
+    public List<RentingData> getPendings(final String code) {
+        final RentACar rentACar = getRentACar(code);
+        return rentACar.getProcessor().getRentingSet().stream().map(RentingData::new).collect(Collectors.toList());
     }
 
     @Atomic(mode = Atomic.TxMode.READ)
@@ -167,7 +173,7 @@ public class RentACarInterface {
 
     private RentACarData toRentACarData(final RentACar rentACar) {
         return new RentACarData(rentACar.getCode(), rentACar.getName(), rentACar.getNif(), rentACar.getIban(),
-                rentACar.getVehicleSet().size());
+                rentACar.getVehicleSet().size(), rentACar.getProcessor());
     }
 
     private RentACar getRentACar(final String code) {

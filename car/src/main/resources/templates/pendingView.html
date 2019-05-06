@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bookings</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+    <script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <h2>
+        Pending Rentings of Processor of Rent-A-Car (<span th:text="${rentacar.name}">Rent-A-Car</span>)
+    </h2>
+    <a class="btn btn-default pull-right" th:href="@{/rentacars/rentacar/{number}(number=${rentacar.code})}">Rent-A-Car</a>
+    <br/>
+
+    <br/>
+    <h3>List of Pending Rentings</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Reference</th>
+            <th>Plate</th>
+            <th>Driving License</th>
+            <th>begin</th>
+            <th>end</th>
+            <th>Payment Reference</th>
+            <th>Invoice Reference</th>
+            <th>Cancellation Reference</th>
+            <th>Price</th>
+            <th>Link</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pending : ${pendings}">
+            <td th:text="${pending.reference}">XPTO</td>
+            <td th:text="${pending.plate}">XPTO</td>
+            <td th:text="${pending.drivingLicense}">XPTO</td>
+            <td th:text="${pending.begin}">XPTO</td>
+            <td th:text="${pending.end}">XPTO</td>
+            <td th:text="${pending.paymentReference}">XPTO</td>
+            <td th:text="${pending.invoiceReference}">XPTO</td>
+            <td th:text="${pending.cancellationReference}">XPTO</td>
+            <td th:text="${pending.price}">XPTO</td>
+            <td>
+                <a th:href="@{/rentacars/rentacar/{code}/vehicles/vehicle/{plate}/rentings/{reference}(code=${rentacar.code},plate=${pending.plate},reference=${pending.reference})}">
+                    <span th:text="${rentacar.numVehicles}">Vehicles</span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
