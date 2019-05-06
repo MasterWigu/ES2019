@@ -81,7 +81,6 @@ public class AccountController {
 		logger.info("accountDeposit bankCode:{}, clientId:{}, iban:{}, amount:{}", code, id, iban, account.getAmount());
 
 		try {
-			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAS "+ account.getAmount());
 			BankInterface.deposit(iban, account.getAmount() != null ? account.getAmountLong() : -1);
 			model.addAttribute("client", BankInterface.getClientDataById(code, id));
 			model.addAttribute("account", BankInterface.getAccountData(iban));
@@ -120,8 +119,7 @@ public class AccountController {
 	@RequestMapping(value = "/{iban}/transfer", method = RequestMethod.POST)
 	public String accountTransfer(Model model, @PathVariable String code, @PathVariable String id,
 								  @PathVariable String iban, @ModelAttribute BankOperationData bankOperation) {
-		/*logger.info("accountWithdraw bankCode:{}, clientId:{}, iban:{}, amount:{}", code, id, iban,
-				account.getAmount());*/
+		logger.info("accountWithdraw bankCode:{}, clientId:{}, amount:{}", code, id, bankOperation.getValueLong());
 
 		try {
 			RestBankOperationData restBankOperationData = new RestBankOperationData();

@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import pt.ulisboa.tecnico.softeng.bank.exception.BankException;
 import pt.ulisboa.tecnico.softeng.bank.services.local.BankInterface;
@@ -48,6 +45,22 @@ public class ClientController {
 			model.addAttribute("client", client);
 			model.addAttribute("bank", BankInterface.getBankDataByCode(code));
 			return "clients";
+		}
+
+		return "redirect:/banks/" + code + "/clients";
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE)
+	public String clientRevert(Model model, @PathVariable String code, @ModelAttribute ClientData client, @RequestParam String reference) {
+		logger.info("clientSubmit bankCode:{}, operationReference:{}", code, reference);
+
+		try {
+			BankInterface.cancelPayment(reference);
+		} catch (BankException be) {
+			model.addAttribute("error", "Error: it was not possible to revert operation.");
+			model.addAttribute("reference", reference);
+			model.addAttribute("bank", BankInterface.getBankDataByCode(code));
+			return "reference";
 		}
 
 		return "redirect:/banks/" + code + "/clients";

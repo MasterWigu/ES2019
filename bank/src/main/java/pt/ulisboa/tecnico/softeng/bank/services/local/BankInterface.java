@@ -152,9 +152,12 @@ public class BankInterface {
         if (operation == null) {
             throw new BankException();
         } else if (operation.getCancellation() != null) {
-            return operation.getCancellation();
+            String op = operation.getCancellation();
+            operation.setReference(op);
+            return op;
         } else {
-            return operation.revert();
+            String op = operation.revert();
+            return op;
         }
 
     }
