@@ -41,7 +41,7 @@ public class ActivityOffer extends ActivityOffer_Base {
 		}
 	}
 
-	int getNumberActiveOfBookings() {
+	public int getNumberActiveOfBookings() {
 		int count = 0;
 		for (Booking booking : getBookingSet()) {
 			if (!booking.isCancelled()) {
