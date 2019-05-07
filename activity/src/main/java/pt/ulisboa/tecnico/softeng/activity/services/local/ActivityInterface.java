@@ -120,6 +120,7 @@ public class ActivityInterface {
 	@Atomic(mode = TxMode.WRITE)
 	public String cancelReservation(String reference) {
 		Booking booking = getBookingByReference(reference);
+		System.out.println("cancel: " + booking.getCancel());
 		if (booking != null && booking.getCancel() == null) {
 			return booking.cancel();
 		}

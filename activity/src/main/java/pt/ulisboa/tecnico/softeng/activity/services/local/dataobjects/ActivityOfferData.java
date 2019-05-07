@@ -22,6 +22,7 @@ public class ActivityOfferData {
 	private Integer capacity;
 	private Double amount;
 	private List<RestActivityBookingData> reservations;
+	private int free;
 
 	public ActivityOfferData() {
 	}
@@ -37,6 +38,7 @@ public class ActivityOfferData {
 		this.amount = new Double(offer.getAmount()) / Activity.SCALE;
 		this.reservations = offer.getBookingSet().stream().map(b -> new RestActivityBookingData(b))
 				.collect(Collectors.toList());
+		this.free = offer.getCapacity() - offer.getNumberActiveOfBookings();
 	}
 
 	public String getExternalId() {
@@ -112,5 +114,9 @@ public class ActivityOfferData {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public int getFree() {return this.free;}
+
+	public void setFree(int free) {this.free = free;}
 
 }

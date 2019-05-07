@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import pt.ulisboa.tecnico.softeng.activity.exception.ActivityException;
 import pt.ulisboa.tecnico.softeng.activity.services.local.ActivityInterface;
@@ -57,6 +54,21 @@ public class BookingController {
 			return "bookings";
 		}
 
+		return "redirect:/providers/" + codeProvider + "/activities/" + codeActivity + "/offers/" + externalId
+				+ "/bookings";
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE)
+	public String bookingCancel(Model model, @PathVariable String codeProvider, @PathVariable String codeActivity,
+								@PathVariable String externalId, @ModelAttribute RestActivityBookingData booking, @RequestParam String reference) {
+		try {
+			activityInterface.cancelReservation(reference);
+		} catch(ActivityException ae) {
+			model.addAttribute("error", "Error: it was not possible to do the booking");
+			model.addAttribute("booking", booking);
+			model.addAttribute("offer", activityInterface.getActivityOfferDataByExternalId(externalId));
+			return "bookings";
+		}
 		return "redirect:/providers/" + codeProvider + "/activities/" + codeActivity + "/offers/" + externalId
 				+ "/bookings";
 	}

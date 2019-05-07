@@ -56,5 +56,4 @@ public class ActivityController {
 
 		return "redirect:/providers/" + code + "/activities";
 	}
-
 }
