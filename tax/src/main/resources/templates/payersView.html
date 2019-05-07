@@ -31,7 +31,8 @@
 					<th>Name</th>
 					<th>Address</th>
 					<th>NIF</th>
-					<th>List of Tax per year</th>
+					<th>List of Payed Tax per year</th>
+					<th>List of Returned Tax per year </th>
 					<th>Invoices</th>
 				</tr>
 			</thead>
@@ -49,6 +50,21 @@
 										th:case="${T(pt.ulisboa.tecnico.softeng.tax.services.local.dataobjects.TaxPayerData)}">Tax
 												Return</span> <span th:case="*">Payed Tax</span>
 									</span></th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="key: ${payer.getTaxes().keySet()}">
+								<td th:text="${key}">2018</td>
+								<td th:text="${payer.getTaxes().get(key)}">567.98</td>
+							</tr>
+							</tbody>
+						</table>
+					</th>
+					<th>
+						<table class="table table-striped">
+							<thead>
+							<tr>
+								<th>Year</th>
 								<th><span th:switch="${payer}"> <span
 										th:case="${T(pt.ulisboa.tecnico.softeng.tax.services.local.dataobjects.TaxPayerData)}">Tax
 												Return</span> <span th:case="*">Returned Tax</span>
@@ -56,9 +72,8 @@
 							</tr>
 							</thead>
 							<tbody>
-							<tr th:each="key: ${payer.getTaxes().keySet()}">
+							<tr th:each="key: ${payer.getReturns().keySet()}">
 								<td th:text="${key}">2018</td>
-								<td th:text="${payer.getTaxes().get(key)}">567.98</td>
 								<td th:text="${payer.getReturns().get(key)}">150.98</td>
 							</tr>
 							</tbody>
