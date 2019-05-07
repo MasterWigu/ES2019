@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.softeng.car.services.local.dataobjects;
 
 import org.joda.time.LocalDate;
+import pt.ulisboa.tecnico.softeng.car.domain.Processor;
 import pt.ulisboa.tecnico.softeng.car.domain.Renting;
 
 public class RentACarData {
@@ -9,16 +10,20 @@ public class RentACarData {
     private String nif;
     private String iban;
     private Integer numVehicles;
+    private Integer numPendings;
+    private Processor processor;
 
     public RentACarData() {
     }
 
-    public RentACarData(String code, String name, String nif, String iban, Integer numVehicles) {
+    public RentACarData(String code, String name, String nif, String iban, Integer numVehicles, Processor processor) {
         this.code = code;
         this.name = name;
         this.nif = nif;
         this.iban = iban;
         this.numVehicles = numVehicles;
+        this.processor = processor;
+        this.numPendings = processor.getRentingSet().size();
     }
 
     public Integer getNumVehicles() {
@@ -60,4 +65,16 @@ public class RentACarData {
     public void setIban(String iban) {
         this.iban = iban;
     }
+
+    public Processor getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(Processor processor) {
+        this.processor = processor;
+    }
+
+    public Integer getNumPendings() { return this.numPendings; }
+
+    public void setNumPendings(int numPendings) { this.numPendings = numPendings; }
 }
