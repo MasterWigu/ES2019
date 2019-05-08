@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import pt.ulisboa.tecnico.softeng.hotel.exception.HotelException;
 import pt.ulisboa.tecnico.softeng.hotel.services.local.HotelInterface;
@@ -57,6 +54,20 @@ public class BookingController {
 			return "bookings";
 		}
 
+		return "redirect:/hotels/" + code + "/rooms/" + number + "/bookings";
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE)
+	public String bookingCancel(Model model, @PathVariable String code, @PathVariable String number,
+								@ModelAttribute RoomBookingData booking, @RequestParam String reference) {
+		try {
+			hotelInterface.cancelBooking(reference);
+		} catch(HotelException be) {
+			model.addAttribute("error", "Error: it was not possible to do the booking");
+			model.addAttribute("booking", booking);
+			model.addAttribute("room", hotelInterface.getRoomDataByNumber(code, number));
+			return "bookings";
+		}
 		return "redirect:/hotels/" + code + "/rooms/" + number + "/bookings";
 	}
 }

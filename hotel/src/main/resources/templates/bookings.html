@@ -55,6 +55,14 @@
 					<td th:text="${booking.price}">49.99</td>
 					<td th:text="${booking.cancellation}">xpto3456CANCEL</td>
 					<td th:text="${booking.cancellationDate}">07/12/2016</td>
+					<td>
+						<form class="form-inline"
+							  th:action="@{/hotels/{code}/rooms/{number}/bookings(code=${room.hotelCode},number=${room.number})}"
+							  th:object="${booking}" th:method="delete">
+							<input name="reference" th:value="${booking.reference}" style="display:none;"/>
+							<input class="btn btn-primary" type="submit" value="Cancel"/>
+						</form>
+					</td>
 				</tr>
 			</tbody>
 		</table>
