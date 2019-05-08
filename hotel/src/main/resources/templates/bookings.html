@@ -29,26 +29,40 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<th>Adventure ID</th>
 					<th>Arrival</th>
- 					<th>Departure</th>
+					<th>Departure</th>
 					<th>Reference</th>
- 					<th>NIF</th>
+					<th>Payment Reference</th>
+					<th>Invoice Number</th>
+					<th>NIF</th>
 					<th>IBAN</th>
 					<th>Price</th>
 					<th>Cancellation</th>
-					<th>Cancellation Date</th>					
+					<th>Cancellation Date</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="booking : ${room.bookings}">
+					<td th:text="${booking.adventureId}"></td>
 					<td th:text="${booking.arrival}">12/12/2016</td>
 					<td th:text="${booking.departure}">21/12/2016</td>
 					<td th:text="${booking.reference}">xpto3456</td>
+					<td th:text="${booking.paymentReference}"></td>
+					<td th:text="${booking.invoiceReference}"></td>
 					<td th:text="${booking.buyerNif}">123456779</td>
 					<td th:text="${booking.buyerIban}">CGD 1235 7487439 8498</td>
 					<td th:text="${booking.price}">49.99</td>
 					<td th:text="${booking.cancellation}">xpto3456CANCEL</td>
 					<td th:text="${booking.cancellationDate}">07/12/2016</td>
+					<td>
+						<form class="form-inline"
+							  th:action="@{/hotels/{code}/rooms/{number}/bookings(code=${room.hotelCode},number=${room.number})}"
+							  th:object="${booking}" th:method="delete">
+							<input name="reference" th:value="${booking.reference}" style="display:none;"/>
+							<input class="btn btn-primary" type="submit" value="Cancel"/>
+						</form>
+					</td>
 				</tr>
 			</tbody>
 		</table>
