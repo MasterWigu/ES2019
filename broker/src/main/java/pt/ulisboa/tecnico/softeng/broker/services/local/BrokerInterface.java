@@ -107,7 +107,8 @@ public class BrokerInterface {
         }
     }
 
-    private static Broker getBrokerByCode(String code) {
+    @Atomic(mode = TxMode.READ)
+    public static Broker getBrokerByCode(String code) {
         for (Broker broker : FenixFramework.getDomainRoot().getBrokerSet()) {
             if (broker.getCode().equals(code)) {
                 return broker;
@@ -116,4 +117,14 @@ public class BrokerInterface {
         return null;
     }
 
+    @Atomic(mode = TxMode.WRITE)
+    public static void cancelRoomBooking(String brokerCode, String id) {
+        Adventure adventure = FenixFramework.getDomainRoot().getBrokerSet().stream()
+                .filter(b -> b.getCode().equals(brokerCode)).flatMap(b -> b.getAdventureSet().stream())
+                .filter(a -> a.getID().equals(id)).findFirst().orElseThrow(BrokerException::new);
+
+        HotelInterface hotelInterface = getBrokerByCode(brokerCode).getHotelInterface();
+
+        adventure.setRoomCancellation(hotelInterface.cancelBooking(adventure.getRoomConfirmation()));
+    }
 }

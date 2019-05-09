@@ -65,6 +65,7 @@
             <th>Activity Confirmation</th>
             <th>Activity Cancellation</th>
             <th>Process</th>
+            <th>Cancel Room</th>
         </tr>
         </thead>
         <tbody>
@@ -95,6 +96,13 @@
                       th:action="@{/brokers/{brokerCode}/clients/{clientNif}/adventures/{id}/process(brokerCode=${client.brokerCode},clientNif=${client.nif},id=${adventure.id})}"
                       method="post">
                     <input class="btn btn-primary" type="submit" value="Submit"/>
+                </form>
+            </td>
+            <td>
+                <form class="form-inline"
+                      th:action="@{/brokers/{brokerCode}/clients/{clientNif}/adventures/{id}/cancelRoom(brokerCode=${client.brokerCode},clientNif=${client.nif},id=${adventure.id})}"
+                      method="post">
+                    <input class="btn btn-primary" type="submit" value="Cancel"/>
                 </form>
             </td>
         </tr>

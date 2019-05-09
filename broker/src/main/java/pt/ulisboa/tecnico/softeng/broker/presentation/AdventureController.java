@@ -69,4 +69,22 @@ public class AdventureController {
         return "redirect:/brokers/" + brokerCode + "/clients/" + clientNif + "/adventures";
     }
 
+    @RequestMapping(value = "/{id}/cancelRoom", method = RequestMethod.POST)
+    public String cancelRoom(Model model, @PathVariable String brokerCode, @PathVariable String clientNif,
+                                  @ModelAttribute AdventureData adventureData, @PathVariable String id) {
+
+        try {
+            if (adventureData.getRoomConfirmation() == null || adventureData.getRoomCancellation() != null)
+                throw new BrokerException();
+            BrokerInterface.cancelRoomBooking(brokerCode,id);
+        } catch (BrokerException be) {
+            model.addAttribute("error", "Error: it was not possible to cancel the room");
+            model.addAttribute("adventure", adventureData);
+            model.addAttribute("client", BrokerInterface.getClientDataByBrokerCodeAndNif(brokerCode, clientNif));
+            return "adventures";
+        }
+
+        return "redirect:/brokers/" + brokerCode + "/clients/" + clientNif + "/adventures";
+    }
+
 }
