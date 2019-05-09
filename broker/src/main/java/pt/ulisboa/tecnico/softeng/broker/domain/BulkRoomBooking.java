@@ -1,7 +1,10 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
+import pt.ulisboa.tecnico.softeng.broker.presentation.AdventureController;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.HotelException;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException;
@@ -12,7 +15,7 @@ import java.util.stream.Collectors;
 public class BulkRoomBooking extends BulkRoomBooking_Base {
     public static final int MAX_HOTEL_EXCEPTIONS = 3;
     public static final int MAX_REMOTE_ERRORS = 10;
-
+    private static final Logger logger = LoggerFactory.getLogger(BulkRoomBooking.class);
     public BulkRoomBooking(Broker broker, int number, LocalDate arrival, LocalDate departure) {
         checkArguments(number, arrival, departure);
 
@@ -89,8 +92,8 @@ public class BulkRoomBooking extends BulkRoomBooking_Base {
                     setCancelled(true);
                 }
             }
-
-            if (data != null && data.getBookRoom().equals(type) && data.getArrival().equals(arrival)
+            logger.info("buuuulk aaa:{}, bbb:{}, ccc:{}, ddd:{}", data.getRoomType(), data.getArrival(), type, arrival);
+            if (data != null && data.getRoomType().equals(type) && data.getArrival().equals(arrival)
                     && data.getDeparture().equals(departure)) {
                 reference.delete();
                 return data;

@@ -13,6 +13,7 @@ import pt.ulisboa.tecnico.softeng.broker.services.local.BrokerInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.AdventureData;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.BrokerData;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.ClientData;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
 
 @Controller
 @RequestMapping(value = "/brokers/{brokerCode}/clients/{clientNif}/adventures")

@@ -3,6 +3,7 @@ package pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import pt.ulisboa.tecnico.softeng.broker.domain.Adventure;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData;
 
 public class AdventureData {
 
@@ -15,6 +16,9 @@ public class AdventureData {
     private String iban;
     private Double margin;
     private Adventure.BookRoom bookRoom;
+    private String roomNumber;
+    private String hotelName;
+    private Double roomPrice;
     private Adventure.RentVehicle rentVehicle;
     private Double amount;
     private Adventure.State state;
@@ -47,6 +51,13 @@ public class AdventureData {
         this.roomCancellation = adventure.getRoomCancellation();
         this.activityConfirmation = adventure.getActivityConfirmation();
         this.activityCancellation = adventure.getActivityCancellation();
+
+        if (roomConfirmation != null) {
+            RestRoomBookingData room = adventure.getBroker().getHotelInterface().getRoomBookingData(this.roomConfirmation);
+            this.roomNumber = room.getRoomNumber();
+            this.hotelName = room.getHotelName();
+            this.roomPrice = new Double(room.getPrice()) / Adventure.SCALE;
+        }
     }
 
     public String getId() {
@@ -186,4 +197,27 @@ public class AdventureData {
         this.rentVehicle = rentVehicle;
     }
 
+    public String getRoomNumber() {
+        return this.roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public String getHotelName() {
+        return this.hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+
+    public Double getRoomPrice() {
+        return this.roomPrice;
+    }
+
+    public void setRoomPrice(Double roomPrice) {
+        this.roomPrice = roomPrice;
+    }
 }
