@@ -13,6 +13,7 @@ import pt.ulisboa.tecnico.softeng.broker.services.local.BrokerInterface;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.AdventureData;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.BrokerData;
 import pt.ulisboa.tecnico.softeng.broker.services.local.dataobjects.ClientData;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
 
 @Controller
 @RequestMapping(value = "/brokers/{brokerCode}/clients/{clientNif}/adventures")
@@ -65,6 +66,22 @@ public class AdventureController {
         logger.info("processAdventure brokerCode:{}, adventureId:{}", brokerCode, id);
 
         BrokerInterface.processAdventure(brokerCode, id);
+        return "redirect:/brokers/" + brokerCode + "/clients/" + clientNif + "/adventures";
+    }
+
+    @RequestMapping(value = "/{id}/cancelRoom", method = RequestMethod.POST)
+    public String cancelRoom(Model model, @PathVariable String brokerCode, @PathVariable String clientNif,
+                                   @PathVariable String id) {
+
+        logger.info("cancelRoom brokerCode:{}, adventureId:{}",
+                brokerCode, id);
+        try {
+            BrokerInterface.cancelRoomBooking(brokerCode,id);
+        } catch (BrokerException be) {
+            model.addAttribute("error", "Error: it was not possible to cancel the room");
+            return "redirect:/brokers/" + brokerCode + "/clients/" + clientNif + "/adventures";
+        }
+
         return "redirect:/brokers/" + brokerCode + "/clients/" + clientNif + "/adventures";
     }
 

@@ -1,7 +1,10 @@
 package pt.ulisboa.tecnico.softeng.broker.domain;
 
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pt.ulisboa.tecnico.softeng.broker.exception.BrokerException;
+import pt.ulisboa.tecnico.softeng.broker.presentation.AdventureController;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.dataobjects.RestRoomBookingData;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.HotelException;
 import pt.ulisboa.tecnico.softeng.broker.services.remote.exception.RemoteAccessException;
@@ -90,7 +93,7 @@ public class BulkRoomBooking extends BulkRoomBooking_Base {
                 }
             }
 
-            if (data != null && data.getBookRoom().equals(type) && data.getArrival().equals(arrival)
+            if (data != null && data.getRoomType().equals(type) && data.getArrival().equals(arrival)
                     && data.getDeparture().equals(departure)) {
                 reference.delete();
                 return data;

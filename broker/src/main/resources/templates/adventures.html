@@ -54,6 +54,10 @@
             <th>Vehicle</th>
             <th>Amount</th>
             <th>State</th>
+            <th>Room Type</th>
+            <th>Room Number</th>
+            <th>Hotel Name</th>
+            <th>Room Price</th>
             <th>Payment Confirmation</th>
             <th>Payment Cancellation</th>
             <th>Room Confirmation</th>
@@ -61,6 +65,7 @@
             <th>Activity Confirmation</th>
             <th>Activity Cancellation</th>
             <th>Process</th>
+            <th>Cancel Room</th>
         </tr>
         </thead>
         <tbody>
@@ -72,6 +77,10 @@
             <td th:text="${adventure.rentVehicle}">true</td>
             <td th:text="${adventure.amount}">amount</td>
             <td th:text="${adventure.state}">state</td>
+            <td th:text="${adventure.bookRoom}">Room Type</td>
+            <td th:text="${adventure.roomNumber}">Room Number</td>
+            <td th:text="${adventure.hotelName}">Hotel Name</td>
+            <td th:text="${adventure.roomPrice}">Room Price</td>
             <td th:text="${adventure.paymentConfirmation}">Payment
                 Confirmation
             </td>
@@ -87,6 +96,13 @@
                       th:action="@{/brokers/{brokerCode}/clients/{clientNif}/adventures/{id}/process(brokerCode=${client.brokerCode},clientNif=${client.nif},id=${adventure.id})}"
                       method="post">
                     <input class="btn btn-primary" type="submit" value="Submit"/>
+                </form>
+            </td>
+            <td>
+                <form class="form-inline"
+                      th:action="@{/brokers/{brokerCode}/clients/{clientNif}/adventures/{id}/cancelRoom(brokerCode=${client.brokerCode},clientNif=${client.nif},id=${adventure.id})}"
+                      method="post">
+                    <input class="btn btn-primary" type="submit" value="Cancel"/>
                 </form>
             </td>
         </tr>

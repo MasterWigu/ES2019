@@ -4,6 +4,7 @@ import pt.ulisboa.tecnico.softeng.broker.domain.Adventure;
 import pt.ulisboa.tecnico.softeng.broker.domain.Broker;
 import pt.ulisboa.tecnico.softeng.broker.domain.BulkRoomBooking;
 import pt.ulisboa.tecnico.softeng.broker.domain.Client;
+import pt.ulisboa.tecnico.softeng.broker.services.remote.HotelInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class BrokerData {
     private List<ClientData> clients = new ArrayList<>();
     private List<AdventureData> adventures = new ArrayList<>();
     private List<BulkData> bulks = new ArrayList<>();
+    private HotelInterface hotelInterface;
 
     public BrokerData() {
     }
@@ -27,6 +29,7 @@ public class BrokerData {
     public BrokerData(Broker broker, CopyDepth depth) {
         this.name = broker.getName();
         this.code = broker.getCode();
+        this.hotelInterface = broker.getHotelInterface();
 
         switch (depth) {
             case CLIENTS:
@@ -108,4 +111,11 @@ public class BrokerData {
         this.bulks = bulks;
     }
 
+    public HotelInterface getHotelInterface() {
+        return this.hotelInterface;
+    }
+
+    public void setHotelInterface(HotelInterface hotelInterface) {
+        this.hotelInterface = hotelInterface;
+    }
 }
