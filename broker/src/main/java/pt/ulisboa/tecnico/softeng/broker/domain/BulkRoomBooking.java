@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class BulkRoomBooking extends BulkRoomBooking_Base {
     public static final int MAX_HOTEL_EXCEPTIONS = 3;
     public static final int MAX_REMOTE_ERRORS = 10;
-    private static final Logger logger = LoggerFactory.getLogger(BulkRoomBooking.class);
+
     public BulkRoomBooking(Broker broker, int number, LocalDate arrival, LocalDate departure) {
         checkArguments(number, arrival, departure);
 
@@ -92,7 +92,7 @@ public class BulkRoomBooking extends BulkRoomBooking_Base {
                     setCancelled(true);
                 }
             }
-            logger.info("buuuulk aaa:{}, bbb:{}, ccc:{}, ddd:{}", data.getRoomType(), data.getArrival(), type, arrival);
+
             if (data != null && data.getRoomType().equals(type) && data.getArrival().equals(arrival)
                     && data.getDeparture().equals(departure)) {
                 reference.delete();

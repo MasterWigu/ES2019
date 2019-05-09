@@ -124,6 +124,8 @@ public class BrokerInterface {
                 .filter(a -> a.getID().equals(id)).findFirst().orElseThrow(BrokerException::new);
 
         HotelInterface hotelInterface = getBrokerByCode(brokerCode).getHotelInterface();
+        if (adventure.getRoomConfirmation() == null || adventure.getRoomCancellation() != null)
+            throw new BrokerException();
 
         adventure.setRoomCancellation(hotelInterface.cancelBooking(adventure.getRoomConfirmation()));
     }
